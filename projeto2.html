@@ -1,0 +1,1869 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carro Robô Arduino Desviador de Obstáculos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset e configurações gerais */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-color: #00d4ff;
+            --secondary-color: #0095ff;
+            --accent-color: #ff3e80;
+            --dark-bg: #0a0a12;
+            --darker-bg: #050508;
+            --card-bg: #151520;
+            --light-text: #f0f0f0;
+            --gray-text: #a0a0b0;
+            --border-color: #2a2a3a;
+            --shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            --glow: 0 0 15px rgba(0, 212, 255, 0.3);
+            --transition: all 0.4s ease;
+            --border-radius: 12px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--light-text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        section {
+            padding: 90px 0;
+        }
+
+        /* Estilos do cabeçalho */
+        header {
+            background: linear-gradient(135deg, rgba(0, 149, 255, 0.9), rgba(0, 212, 255, 0.9));
+            color: white;
+            padding: 22px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo h1 {
+            font-size: 1.9rem;
+            margin-bottom: 5px;
+            background: linear-gradient(to right, #fff, #00d4ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+            letter-spacing: 0.5px;
+        }
+
+        .logo p {
+            font-size: 1rem;
+            opacity: 0.9;
+            color: #fff;
+            font-weight: 500;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav li {
+            margin-left: 25px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 8px 0;
+            position: relative;
+            font-size: 1.05rem;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-color);
+            transition: var(--transition);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: white;
+        }
+
+        /* Seção Hero */
+        .hero {
+            text-align: center;
+            padding: 130px 0 90px;
+            background: linear-gradient(rgba(10, 10, 18, 0.9), rgba(10, 10, 18, 0.9)), url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(255, 62, 128, 0.1) 0%, transparent 50%);
+            z-index: 0;
+        }
+
+        .hero .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h2 {
+            font-size: 3.2rem;
+            margin-bottom: 25px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 25px rgba(0, 212, 255, 0.4);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 850px;
+            margin: 0 auto 40px;
+            color: var(--gray-text);
+        }
+
+        .project-image {
+            width: 100%;
+            max-width: 800px;
+            height: 400px;
+            object-fit: cover;
+            border-radius: var(--border-radius);
+            margin-top: 40px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        /* Seção de introdução com vídeo */
+        .intro {
+            background-color: var(--darker-bg);
+        }
+
+        .intro-content {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .intro-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .intro-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 25px;
+            color: var(--light-text);
+        }
+
+        .intro-text h2 span {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .intro-text p {
+            color: var(--gray-text);
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .intro-video {
+            flex: 1;
+            min-width: 300px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .video-container {
+            width: 100%;
+            height: 100%;
+            min-height: 400px;
+            background-color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            z-index: 2;
+            transition: var(--transition);
+        }
+
+        .video-overlay:hover {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .video-overlay h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: white;
+        }
+
+        .video-overlay p {
+            color: #ddd;
+            margin-bottom: 20px;
+            max-width: 400px;
+        }
+
+        .video-loading {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .video-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(45deg, #0a0a12, #151520);
+            z-index: 1;
+        }
+
+        .video-placeholder i {
+            font-size: 4rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .video-placeholder h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--light-text);
+        }
+
+        /* Seção de tutorial */
+        .tutorial {
+            background-color: var(--dark-bg);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 70px;
+            position: relative;
+            color: var(--light-text);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 120px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .progress-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 60px;
+        }
+
+        .progress-bar {
+            width: 80%;
+            height: 10px;
+            background-color: var(--card-bg);
+            border-radius: 5px;
+            position: relative;
+            margin: 0 20px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            border-radius: 5px;
+            width: 0%;
+            transition: var(--transition);
+        }
+
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 55px;
+            height: 55px;
+            background-color: var(--card-bg);
+            color: var(--gray-text);
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .step-indicator.active {
+            background-color: var(--primary-color);
+            color: white;
+            transform: scale(1.1);
+            box-shadow: var(--glow);
+            border-color: var(--primary-color);
+        }
+
+        /* Cards do tutorial */
+        .tutorial-container {
+            position: relative;
+        }
+
+        .step-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 50px;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+        }
+
+        .step-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .step-card:hover {
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+            transform: translateY(-8px);
+        }
+
+        .step-image {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .step-card:hover .step-image {
+            transform: scale(1.03);
+        }
+
+        .step-content {
+            padding: 35px;
+        }
+
+        .step-number {
+            display: inline-block;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 55px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            box-shadow: var(--glow);
+        }
+
+        .step-title {
+            font-size: 1.8rem;
+            margin-bottom: 18px;
+            color: var(--light-text);
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .step-title span {
+            color: var(--primary-color);
+        }
+
+        .step-description {
+            color: var(--gray-text);
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        /* Seção de componentes */
+        .components {
+            background-color: var(--darker-bg);
+        }
+
+        .components-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .component-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .component-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            border-color: var(--primary-color);
+        }
+
+        .component-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .component-content {
+            padding: 25px;
+        }
+
+        .component-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--light-text);
+        }
+
+        .component-card p {
+            color: var(--gray-text);
+            font-size: 1rem;
+        }
+
+        /* Seção de códigos */
+        .code-section {
+            background-color: var(--dark-bg);
+        }
+
+        .code-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .code-card {
+            max-width: 900px;
+            width: 100%;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+        }
+
+        .code-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            border-color: var(--primary-color);
+        }
+
+        .code-icon {
+            font-size: 4rem;
+            margin-bottom: 25px;
+            color: var(--primary-color);
+        }
+
+        .code-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--light-text);
+        }
+
+        .code-card p {
+            color: var(--gray-text);
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+        }
+
+        .code-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .download-btn, .copy-btn {
+            display: inline-block;
+            padding: 15px 30px;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            min-width: 200px;
+        }
+
+        .download-btn {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            box-shadow: 0 5px 15px rgba(0, 114, 255, 0.4);
+        }
+
+        .copy-btn {
+            background: linear-gradient(to right, var(--accent-color), #ff6b9d);
+            box-shadow: 0 5px 15px rgba(255, 62, 128, 0.4);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 114, 255, 0.6);
+            background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 62, 128, 0.6);
+            background: linear-gradient(to right, #ff6b9d, var(--accent-color));
+        }
+
+        .code-preview {
+            background-color: #1e1e2e;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+            overflow-x: auto;
+            border: 1px solid #2a2a3a;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .code-preview pre {
+            color: #f0f0f0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .code-comment {
+            color: #6a9955;
+        }
+
+        .code-keyword {
+            color: #569cd6;
+        }
+
+        .code-function {
+            color: #dcdcaa;
+        }
+
+        .code-number {
+            color: #b5cea8;
+        }
+
+        .code-string {
+            color: #ce9178;
+        }
+
+        /* Botão voltar ao topo */
+        .back-to-top {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            text-decoration: none;
+            box-shadow: var(--shadow);
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 999;
+            border: none;
+            cursor: pointer;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 0 25px rgba(0, 212, 255, 0.7);
+        }
+
+        /* Rodapé */
+        footer {
+            background-color: #050508;
+            color: var(--gray-text);
+            padding: 60px 0 25px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            text-align: left;
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .footer-logo h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .footer-logo p {
+            font-size: 1rem;
+            opacity: 0.8;
+            max-width: 300px;
+        }
+
+        .footer-info {
+            text-align: left;
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .footer-info h4 {
+            color: var(--light-text);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .footer-info p {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-info i {
+            margin-right: 12px;
+            color: var(--primary-color);
+            width: 20px;
+        }
+
+        .copyright {
+            margin-top: 30px;
+            width: 100%;
+            font-size: 0.9rem;
+            opacity: 0.7;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Notificação de cópia */
+        .copy-notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 15px 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: var(--transition);
+        }
+
+        .copy-notification.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Responsividade */
+        @media (max-width: 992px) {
+            .hero h2 {
+                font-size: 2.7rem;
+            }
+            
+            .section-title {
+                font-size: 2.4rem;
+            }
+            
+            .step-image {
+                height: 280px;
+            }
+            
+            .project-image {
+                height: 350px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            nav ul {
+                position: fixed;
+                top: 85px;
+                left: 0;
+                width: 100%;
+                background-color: rgba(0, 149, 255, 0.95);
+                flex-direction: column;
+                align-items: center;
+                padding: 25px 0;
+                box-shadow: var(--shadow);
+                transform: translateY(-100%);
+                opacity: 0;
+                transition: var(--transition);
+                z-index: 999;
+                backdrop-filter: blur(10px);
+            }
+            
+            nav ul.active {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            
+            nav li {
+                margin: 18px 0;
+            }
+            
+            .progress-container {
+                flex-wrap: wrap;
+            }
+            
+            .progress-bar {
+                order: 1;
+                width: 100%;
+                margin: 25px 0;
+            }
+            
+            .step-indicator {
+                margin: 0 12px;
+            }
+            
+            section {
+                padding: 70px 0;
+            }
+            
+            .hero {
+                padding: 110px 0 70px;
+            }
+            
+            .intro-content, .components-grid, .code-container {
+                flex-direction: column;
+            }
+            
+            .video-container {
+                min-height: 350px;
+            }
+            
+            .code-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .download-btn, .copy-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero {
+                padding: 90px 0 50px;
+            }
+            
+            .hero h2 {
+                font-size: 2.2rem;
+            }
+            
+            .logo h1 {
+                font-size: 1.6rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .step-title {
+                font-size: 1.5rem;
+            }
+            
+            .step-content {
+                padding: 25px;
+            }
+            
+            .project-image {
+                height: 250px;
+            }
+            
+            .footer-logo, .footer-info {
+                min-width: 100%;
+                margin-bottom: 30px;
+                text-align: center;
+            }
+            
+            .code-card {
+                padding: 25px;
+            }
+            
+            .code-preview {
+                padding: 15px;
+            }
+            
+            .code-preview pre {
+                font-size: 0.75rem;
+            }
+            
+            .video-container {
+                min-height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Cabeçalho -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <h1>Carro Robô Arduino Desviador de Obstáculos</h1>
+                <p>Projeto Arduino - Robótica Educacional</p>
+            </div>
+            
+            <div class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            
+            <nav>
+                <ul id="navMenu">
+                    <li><a href="#inicio">Início</a></li>
+                    <li><a href="#tutorial">Tutorial</a></li>
+                    <li><a href="#componentes">Componentes</a></li>
+                    <li><a href="#codigos">Código</a></li>
+                    <li><a href="#sobre">Sobre</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Seção Hero -->
+    <section class="hero" id="inicio">
+        <div class="container">
+            <h2>Carro Arduino Desviador de Obstáculos</h2>
+            <p>Um robô inteligente que detecta obstáculos, recua automaticamente, muda de direção e continua seu caminho. Projeto ideal para aprender robótica, programação e eletrônica com Arduino.</p>
+            <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Carro robô com Arduino" class="project-image">
+        </div>
+    </section>
+
+    <!-- Seção de Introdução com Vídeo -->
+    <section class="intro" id="introducao">
+        <div class="container">
+            <div class="intro-content">
+                <div class="intro-text">
+                    <h2>Como esse Projeto <span> Funciona</span>?</h2>
+                    <p>Este carro robótico utiliza um sensor ultrassônico para medir a distância de objetos à sua frente. Quando detecta um obstáculo muito próximo, ele automaticamente:</p>
+                    <p><strong>1.</strong> Para os motores e dá ré por um curto período</p>
+                    <p><strong>2.</strong> Usa um servo motor para girar o sensor e verificar a melhor direção</p>
+                    <p><strong>3.</strong> Vira para uma nova direção livre de obstáculos</p>
+                    <p><strong>4.</strong> Continua seguindo em frente até encontrar outro obstáculo</p>
+                    <p>O controle principal é feito por um Arduino UNO, que processa os dados do sensor e comanda os motores através de um driver L298N.</p>
+                    <p><strong>Assista ao vídeo ao lado para ver o carro em ação!</strong></p>
+                </div>
+                <div class="intro-video">
+                    <div class="video-container">
+                        <!-- Vídeo em loop -->
+                        <video id="demoVideo" autoplay muted loop playsinline>
+                            <source id="videoSource" type="video/mp4">
+                            Seu navegador não suporta a tag de vídeo.
+                        </video>
+                        
+                        <!-- Overlay com informações -->
+                        <div class="video-overlay" id="videoOverlay">
+                            <div class="video-loading" id="videoLoading">
+                                <i class="fas fa-sync-alt"></i>
+                            </div>
+                            <h3>Carro Robô em Ação</h3>
+                            <p>Vídeo demonstrativo do carro robô desviando de obstáculos em tempo real</p>
+                            <p><small>Vídeo em loop - 15 segundos</small></p>
+                        </div>
+                        
+                        <!-- Placeholder se o vídeo não carregar -->
+                        <div class="video-placeholder" id="videoPlaceholder">
+                            <i class="fas fa-robot"></i>
+                            <h3>Demonstração do Carro Robô</h3>
+                            <p>Carregando vídeo demonstrativo...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tutorial Passo a Passo -->
+    <section class="tutorial" id="tutorial">
+        <div class="container">
+            <h2 class="section-title">Montagem Passo a Passo</h2>
+            
+            <!-- Barra de progresso -->
+            <div class="progress-container">
+                <div class="step-indicator active">1</div>
+                <div class="progress-bar">
+                    <div class="progress" id="progressBar"></div>
+                </div>
+                <div class="step-indicator">6</div>
+            </div>
+
+            <!-- Container dos passos -->
+            <div class="tutorial-container">
+                <!-- Passo 1 -->
+                <div class="step-card" id="step1">
+                    <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Passo 1: Montagem do chassi" class="step-image">
+                    <div class="step-content">
+                        <div class="step-number">1</div>
+                        <h3 class="step-title"><span>Passo 1:</span> Montagem da Base</h3>
+                        <p class="step-description">Comece montando a estrutura básica do carro robô. Fixe os motores DC nas laterais da base utilizando os parafusos fornecidos. Certifique-se de que os motores estão firmemente presos e alinhados. Em seguida, instale as rodas nos eixos dos motores. Adicione a roda livre na parte dianteira ou traseira para garantir estabilidade.</p>
+                    </div>
+                </div>
+
+                <!-- Passo 2 -->
+                <div class="step-card" id="step2">
+                    <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Passo 2: Instalação do Arduino e driver" class="step-image">
+                    <div class="step-content">
+                        <div class="step-number">2</div>
+                        <h3 class="step-title"><span>Passo 2:</span> Instalação do Arduino e Shield</h3>
+                        <p class="step-description">Conecte o Arduino UNO ao Adafruit Motor Shield. Fixe essa combinação na parte superior da base do carro. O Motor Shield será responsável por controlar a velocidade e direção dos 2 motores DC. Conecte a fonte de alimentação (bateria Li-Ion) ao shield, tomando cuidado com a polaridade.</p>
+                    </div>
+                </div>
+
+                <!-- Passo 3 -->
+                <div class="step-card" id="step3">
+                    <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Passo 3: Conexão dos motores e sensor" class="step-image">
+                    <div class="step-content">
+                        <div class="step-number">3</div>
+                        <h3 class="step-title"><span>Passo 3:</span> Conexão dos Motores e Sensor</h3>
+                        <p class="step-description">Conecte os fios dos 2 motores DC às saídas do Motor Shield (M1 e M2). Instale o sensor ultrassônico HC-SR04 na parte frontal do carro, montado no servo motor para permitir varredura. Conecte o sensor ao Arduino: VCC no 5V, GND no GND, Trig no pino A0 e Echo no pino A1.</p>
+                    </div>
+                </div>
+
+                <!-- Passo 4 -->
+                <div class="step-card" id="step4">
+                    <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Passo 4: Instalação do servo motor" class="step-image">
+                    <div class="step-content">
+                        <div class="step-number">4</div>
+                        <h3 class="step-title"><span>Passo 4:</span> Instalação do Servo Motor</h3>
+                        <p class="step-description">Monte o servo motor SG90 na parte dianteira do carro, conectado ao suporte do sensor ultrassônico. O servo permitirá que o sensor gire para os lados para verificar a melhor direção. Conecte o servo ao Arduino: fio vermelho no 5V, marrom no GND e laranja no pino 10. Teste o movimento do servo com um código básico antes de prosseguir.</p>
+                    </div>
+                </div>
+
+                <!-- Passo 5 -->
+                <div class="step-card" id="step5">
+                    <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Passo 5: Programação do Arduino" class="step-image">
+                    <div class="step-content">
+                        <div class="step-number">5</div>
+                        <h3 class="step-title"><span>Passo 5:</span> Programação do Arduino</h3>
+                        <p class="step-description">Conecte o Arduino ao computador via cabo USB. Abra a IDE do Arduino e crie um novo sketch. Instale as bibliotecas necessárias: AFMotor, NewPing e Servo. Programe a lógica: leitura do sensor ultrassônico, controle dos 2 motores através do Motor Shield, e movimento do servo para verificar direções. Faça upload do código para o Arduino.</p>
+                    </div>
+                </div>
+
+                <!-- Passo 6 -->
+                <div class="step-card" id="step6">
+                    <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Passo 6: Testes e ajustes finais" class="step-image">
+                    <div class="step-content">
+                        <div class="step-number">6</div>
+                        <h3 class="step-title"><span>Passo 6:</span> Testes e Ajustes Finais</h3>
+                        <p class="step-description">Desconecte o Arduino do computador e alimente o sistema com a bateria. Teste o funcionamento do carro em uma área livre com obstáculos. Observe se ele detecta obstáculos corretamente, dá ré, verifica as direções e muda de direção. Ajuste parâmetros no código como distância de detecção, velocidade dos motores e ângulo de virada. Faça os ajustes necessários até o carro funcionar perfeitamente.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Componentes -->
+    <section class="components" id="componentes">
+        <div class="container">
+            <h2 class="section-title">Componentes Utilizados</h2>
+            
+            <div class="components-grid">
+                <div class="component-card">
+                    <img src="https://imgs.search.brave.com/ovqL8gA6q9eO8xua5zqDxIGwhmT-9fv6ECdw6V31InI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90aHVt/YnMuZHJlYW1zdGlt/ZS5jb20vYi9hcmR1/aW5vLXVuby1ib2Fy/ZC1ibGFjay1iYWNr/Z3JvdW5kLXNhbmt0/LXBldGVyc2J1cmct/cnVzc2lhLWZlYnJ1/YXJ5LWNsb3NlLXVw/LW1pY3JvY29udHJv/bGxlci1wcm9ncmFt/bWluZy0xODQyODA4/OTIuanBn" alt="Arduino UNO" class="component-image">
+                    <div class="component-content">
+                        <h3>Arduino UNO</h3>
+                        <p>Microcontrolador principal que processa os dados do sensor e controla os motores.</p>
+                    </div>
+                </div>
+                
+                <div class="component-card">
+                    <img src="https://imgs.search.brave.com/kUsw2jMzXDmdSUNMxCJmoAZqjRJx9BAiE6Zgosw-oSg/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/YXdzbGkuY29tLmJy/LzYwMHgxMDAwLzI0/MDYvMjQwNjA3OS9w/cm9kdXRvLzIxOTAx/MzkwOC82MjBfMV9o/LXRjNW50b2s3d3Mu/cG5n" alt="Sensor Ultrassônico HC-SR04" class="component-image">
+                    <div class="component-content">
+                        <h3>Sensor Ultrassônico HC-SR04</h3>
+                        <p>Detecta obstáculos medindo a distância através de ondas sonoras.</p>
+                    </div>
+                </div>
+                
+                <div class="component-card">
+                    <img src="https://imgs.search.brave.com/hHZx8pwuMFDkNSq-eT9048C4vNRuAeg4INcyE_4-8vY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/Ym9kYW5pdXMuY29t/L21lZGlhLzEvMmVk/MTAyOTc5X3Rvd2Vy/cHJvLXNnOTAtOWct/bWljcm8tc2Vydm8t/bW90b3JfeC5wbmc" alt="Servo Motor SG90" class="component-image">
+                    <div class="component-content">
+                        <h3>Servo Motor SG90</h3>
+                        <p>Controla a direção do sensor ultrassônico para verificar obstáculos laterais.</p>
+                    </div>
+                </div>
+                
+                <div class="component-card">
+                    <img src="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Adafruit Motor Shield" class="component-image">
+                    <div class="component-content">
+                        <h3>Adafruit Motor Shield</h3>
+                        <p>Controla a velocidade e direção dos dois motores DC do carro robô.</p>
+                    </div>
+                </div>
+                
+                <div class="component-card">
+                    <img src="https://imgs.search.brave.com/mIBiD0urFGM5poAQCCPmxgdHSUCnRvl2o2rKN55E55A/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tdmVs/ZWN0cm9uaWNhLnMz/LnVzLWVhc3QtMi5h/bWF6b25hd3MuY29t/L3Byb2R1Y3Rvcy9N/T1Q0OEEvNjExNWEx/ODM2MWVlZi53ZWJw" alt="Motores DC" class="component-image">
+                    <div class="component-content">
+                        <h3>Motores DC (x2)</h3>
+                        <p>Fornecem a tração para o carro se mover para frente, trás e fazer curvas.</p>
+                    </div>
+                </div>
+                
+                <div class="component-card">
+                    <img src="https://imgs.search.brave.com/tOS4Ev9s-MaSDPp1Y1qfJAVWUy8kS-xSCKlhUAGKhzY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMudGNkbi5jb20u/YnIvaW1nL2ltZ19w/cm9kLzY3MjQ4Ni9i/YXRlcmlhX2xpX2lv/bl9pY3IxODY1MF8y/MjAwbWFoXzNfN3Zf/MjMyM18zX2JlYmRh/ZGQyY2U1ODRiMjdh/ZWVlNTFjYzVhZGE3/YWQzXzIwMjQxMTI4/MTAzOTE3LmpwZw" alt="Bateria Li-Ion" class="component-image">
+                    <div class="component-content">
+                        <h3>Bateria Li-Ion 2200mAh 3,7V</h3>
+                        <p>Fonte de energia para todo o sistema (Arduino, motores e sensores).</p>
+                    </div>
+                </div>
+                
+                <div class="component-card">
+                    <img src="https://imgs.search.brave.com/Tntog9Oh1RXt-GndocyCGPwIxcV1SiqqLo0ID0Tz81M/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/YXdzbGkuY29tLmJy/LzQwMHg0MDAvNzgv/NzgxNTAvcHJvZHV0/by8yOTgzNzU3MS83/ZWU4YWVlZWRkLmpw/Zw" alt="Jumpers e Cabos" class="component-image">
+                    <div class="component-content">
+                        <h3>Cabos Dupont Jumper</h3>
+                        <p>Conexões para ligar todos os componentes entre si e ao Arduino.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Código -->
+    <section class="code-section" id="codigos">
+        <div class="container">
+            <h2 class="section-title">Código do Carro Robô</h2>
+            
+            <div class="code-container">
+                <div class="code-card">
+                    <div class="code-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>Código Arduino Completo</h3>
+                    <p>Código completo para controlar o carro robô desviador de obstáculos. Inclui leitura do sensor ultrassônico, controle dos 2 motores e servo motor. <strong>Antes de usar, instale as bibliotecas necessárias:</strong> AFMotor, NewPing e Servo.</p>
+                    
+                    <div class="code-preview" id="codePreview">
+                        <pre id="codeContent"><span class="code-comment">// CARRO ARDUINO DESVIO DE OBSTÁCULOS</span>
+<span class="code-comment">// Antes de enviar o código, você precisa instalar as bibliotecas necessárias //</span>
+<span class="code-comment">// Biblioteca AFMotor https://learn.adafruit.com/adafruit-motor-shield/library-install //</span>
+<span class="code-comment">// Biblioteca NewPing https://github.com/livetronic/Arduino-NewPing //</span>
+<span class="code-comment">// Biblioteca Servo https://github.com/arduino-libraries/Servo.git //</span>
+<span class="code-comment">// Para instalar as bibliotecas vá em: Sketch >> Incluir Biblioteca >> Adicionar arquivo .ZIP >> Selecione os arquivos ZIP baixados pelos links acima //</span>
+
+<span class="code-keyword">#include</span> &lt;AFMotor.h&gt;  
+<span class="code-keyword">#include</span> &lt;NewPing.h&gt;
+<span class="code-keyword">#include</span> &lt;Servo.h&gt; 
+
+<span class="code-keyword">#define</span> TRIG_PIN A0 
+<span class="code-keyword">#define</span> ECHO_PIN A1 
+<span class="code-keyword">#define</span> MAX_DISTANCE 200 
+<span class="code-keyword">#define</span> MAX_SPEED 190 
+<span class="code-keyword">#define</span> MAX_SPEED_OFFSET 20
+
+<span class="code-function">NewPing</span> sonar(TRIG_PIN, ECHO_PIN, MAX_DISTANCE); 
+
+<span class="code-function">AF_DCMotor</span> motor1(1, MOTOR12_1KHZ); 
+<span class="code-function">AF_DCMotor</span> motor2(2, MOTOR12_1KHZ);
+<span class="code-function">AF_DCMotor</span> motor3(3, MOTOR34_1KHZ);
+<span class="code-function">AF_DCMotor</span> motor4(4, MOTOR34_1KHZ);
+<span class="code-function">Servo</span> myservo;   
+
+<span class="code-keyword">boolean</span> goesForward = <span class="code-keyword">false</span>;
+<span class="code-keyword">int</span> distance = <span class="code-number">100</span>;
+<span class="code-keyword">int</span> speedSet = <span class="code-number">0</span>;
+
+<span class="code-keyword">void</span> <span class="code-function">setup</span>() {
+
+  myservo.<span class="code-function">attach</span>(<span class="code-number">10</span>);  
+  myservo.<span class="code-function">write</span>(<span class="code-number">115</span>); 
+  <span class="code-function">delay</span>(<span class="code-number">2000</span>);
+  distance = <span class="code-function">readPing</span>();
+  <span class="code-function">delay</span>(<span class="code-number">100</span>);
+  distance = <span class="code-function">readPing</span>();
+  <span class="code-function">delay</span>(<span class="code-number">100</span>);
+  distance = <span class="code-function">readPing</span>();
+  <span class="code-function">delay</span>(<span class="code-number">100</span>);
+  distance = <span class="code-function">readPing</span>();
+  <span class="code-function">delay</span>(<span class="code-number">100</span>);
+}
+
+<span class="code-keyword">void</span> <span class="code-function">loop</span>() {
+ <span class="code-keyword">int</span> distanceR = <span class="code-number">0</span>;
+ <span class="code-keyword">int</span> distanceL =  <span class="code-number">0</span>;
+ <span class="code-function">delay</span>(<span class="code-number">40</span>);
+ 
+ <span class="code-keyword">if</span>(distance &lt;= <span class="code-number">15</span>)
+ {
+  <span class="code-function">moveStop</span>();
+  <span class="code-function">delay</span>(<span class="code-number">100</span>);
+  <span class="code-function">moveBackward</span>();
+  <span class="code-function">delay</span>(<span class="code-number">300</span>);
+  <span class="code-function">moveStop</span>();
+  <span class="code-function">delay</span>(<span class="code-number">200</span>);
+  distanceR = <span class="code-function">lookRight</span>();
+  <span class="code-function">delay</span>(<span class="code-number">200</span>);
+  distanceL = <span class="code-function">lookLeft</span>();
+  <span class="code-function">delay</span>(<span class="code-number">200</span>);
+
+  <span class="code-keyword">if</span>(distanceR &gt;= distanceL)
+  {
+    <span class="code-function">turnRight</span>();
+    <span class="code-function">moveStop</span>();
+  }<span class="code-keyword">else</span>
+  {
+    <span class="code-function">turnLeft</span>();
+    <span class="code-function">moveStop</span>();
+  }
+ }<span class="code-keyword">else</span>
+ {
+  <span class="code-function">moveForward</span>();
+ }
+ distance = <span class="code-function">readPing</span>();
+}
+
+<span class="code-keyword">int</span> <span class="code-function">lookRight</span>()
+{
+    myservo.<span class="code-function">write</span>(<span class="code-number">50</span>); 
+    <span class="code-function">delay</span>(<span class="code-number">500</span>);
+    <span class="code-keyword">int</span> distance = <span class="code-function">readPing</span>();
+    <span class="code-function">delay</span>(<span class="code-number">100</span>);
+    myservo.<span class="code-function">write</span>(<span class="code-number">115</span>); 
+    <span class="code-keyword">return</span> distance;
+}
+
+<span class="code-keyword">int</span> <span class="code-function">lookLeft</span>()
+{
+    myservo.<span class="code-function">write</span>(<span class="code-number">170</span>); 
+    <span class="code-function">delay</span>(<span class="code-number">500</span>);
+    <span class="code-keyword">int</span> distance = <span class="code-function">readPing</span>();
+    <span class="code-function">delay</span>(<span class="code-number">100</span>);
+    myservo.<span class="code-function">write</span>(<span class="code-number">115</span>); 
+    <span class="code-keyword">return</span> distance;
+    <span class="code-function">delay</span>(<span class="code-number">100</span>);
+}
+
+<span class="code-keyword">int</span> <span class="code-function">readPing</span>() { 
+  <span class="code-function">delay</span>(<span class="code-number">70</span>);
+  <span class="code-keyword">int</span> cm = sonar.<span class="code-function">ping_cm</span>();
+  <span class="code-keyword">if</span>(cm == <span class="code-number">0</span>)
+  {
+    cm = <span class="code-number">250</span>;
+  }
+  <span class="code-keyword">return</span> cm;
+}
+
+<span class="code-keyword">void</span> <span class="code-function">moveStop</span>() {
+  motor1.<span class="code-function">run</span>(RELEASE); 
+  motor2.<span class="code-function">run</span>(RELEASE);
+  motor3.<span class="code-function">run</span>(RELEASE);
+  motor4.<span class="code-function">run</span>(RELEASE);
+  } 
+  
+<span class="code-keyword">void</span> <span class="code-function">moveForward</span>() {
+
+ <span class="code-keyword">if</span>(!goesForward)
+  {
+    goesForward = <span class="code-keyword">true</span>;
+    motor1.<span class="code-function">run</span>(FORWARD);      
+    motor2.<span class="code-function">run</span>(FORWARD);
+    motor3.<span class="code-function">run</span>(FORWARD); 
+    motor4.<span class="code-function">run</span>(FORWARD);     
+   <span class="code-keyword">for</span> (speedSet = <span class="code-number">0</span>; speedSet &lt; MAX_SPEED; speedSet +=<span class="code-number">2</span>) 
+   {
+    motor1.<span class="code-function">setSpeed</span>(speedSet);
+    motor2.<span class="code-function">setSpeed</span>(speedSet);
+    motor3.<span class="code-function">setSpeed</span>(speedSet);
+    motor4.<span class="code-function">setSpeed</span>(speedSet);
+    <span class="code-function">delay</span>(<span class="code-number">5</span>);
+   }
+  }
+}
+
+<span class="code-keyword">void</span> <span class="code-function">moveBackward</span>() {
+    goesForward = <span class="code-keyword">false</span>;
+    motor1.<span class="code-function">run</span>(BACKWARD);      
+    motor2.<span class="code-function">run</span>(BACKWARD);
+    motor3.<span class="code-function">run</span>(BACKWARD);
+    motor4.<span class="code-function">run</span>(BACKWARD);  
+  <span class="code-keyword">for</span> (speedSet = <span class="code-number">0</span>; speedSet &lt; MAX_SPEED; speedSet +=<span class="code-number">2</span>) 
+  {
+    motor1.<span class="code-function">setSpeed</span>(speedSet);
+    motor2.<span class="code-function">setSpeed</span>(speedSet);
+    motor3.<span class="code-function">setSpeed</span>(speedSet);
+    motor4.<span class="code-function">setSpeed</span>(speedSet);
+    <span class="code-function">delay</span>(<span class="code-number">5</span>);
+  }
+}  
+
+<span class="code-keyword">void</span> <span class="code-function">turnRight</span>() {
+  motor1.<span class="code-function">run</span>(FORWARD);
+  motor2.<span class="code-function">run</span>(FORWARD);
+  motor3.<span class="code-function">run</span>(BACKWARD);
+  motor4.<span class="code-function">run</span>(BACKWARD);     
+  <span class="code-function">delay</span>(<span class="code-number">500</span>);
+  motor1.<span class="code-function">run</span>(FORWARD);      
+  motor2.<span class="code-function">run</span>(FORWARD);
+  motor3.<span class="code-function">run</span>(FORWARD);
+  motor4.<span class="code-function">run</span>(FORWARD);      
+} 
+ 
+<span class="code-keyword">void</span> <span class="code-function">turnLeft</span>() {
+  motor1.<span class="code-function">run</span>(BACKWARD);     
+  motor2.<span class="code-function">run</span>(BACKWARD);  
+  motor3.<span class="code-function">run</span>(FORWARD);
+  motor4.<span class="code-function">run</span>(FORWARD);   
+  <span class="code-function">delay</span>(<span class="code-number">500</span>);
+  motor1.<span class="code-function">run</span>(FORWARD);     
+  motor2.<span class="code-function">run</span>(FORWARD);
+  motor3.<span class="code-function">run</span>(FORWARD);
+  motor4.<span class="code-function">run</span>(FORWARD);
+}</pre>
+                    </div>
+                    
+                    <div class="code-buttons">
+                        <button class="download-btn" id="downloadCode">
+                            <i class="fas fa-download"></i> Baixar Código (.ino)
+                        </button>
+                        <button class="copy-btn" id="copyCode">
+                            <i class="fas fa-copy"></i> Copiar Código
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rodapé -->
+    <footer id="sobre">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>Carro Arduino Desviador de Obstáculos</h3>
+                    <p>Projeto de robótica para aprendizado de eletrônica e programação. Desenvolvido para estudantes e entusiastas da tecnologia.</p>
+                </div>
+                <div class="footer-info">
+                    <h4>Informações do Projeto</h4>
+                    <p><i class="fas fa-user"></i> <strong>Desenvolvedor:</strong> [Diogo Santos]</p>
+                    <p><i class="fas fa-graduation-cap"></i> <strong>Nível:</strong> Intermediário</p>
+                    <p><i class="fas fa-clock"></i> <strong>Tempo Estimado:</strong> 4-6 horas</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 Carro Arduino Desviador de Obstáculos - Projeto Arduino. Todos os direitos reservados.</p>
+                <p>Site desenvolvido com HTML, CSS e JavaScript por Diogo Santos.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Botão voltar ao topo -->
+    <a href="#inicio" class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <!-- Notificação de cópia -->
+    <div class="copy-notification" id="copyNotification">
+        <i class="fas fa-check-circle"></i> Código copiado para a área de transferência!
+    </div>
+
+    <script>
+        // Menu responsivo
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            menuToggle.innerHTML = navMenu.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+
+        // Fechar menu ao clicar em um link
+        const navLinks = document.querySelectorAll('nav a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+
+        // Animações ao rolar a página
+        const stepCards = document.querySelectorAll('.step-card');
+        const progressBar = document.getElementById('progressBar');
+        const stepIndicators = document.querySelectorAll('.step-indicator');
+        const backToTop = document.getElementById('backToTop');
+
+        // Função para verificar se um elemento está visível na tela
+        function isElementInViewport(el) {
+            const rect = el.getBoundingClientRect();
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) * 1.2 &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            );
+        }
+
+        // Função para atualizar animações e progresso
+        function updateOnScroll() {
+            // Animar cards ao rolar
+            stepCards.forEach(card => {
+                if (isElementInViewport(card)) {
+                    card.classList.add('visible');
+                }
+            });
+
+            // Atualizar barra de progresso
+            let totalSteps = stepCards.length;
+            let stepsInView = 0;
+            
+            stepCards.forEach((card, index) => {
+                if (isElementInViewport(card)) {
+                    stepsInView = index + 1;
+                }
+            });
+
+            // Atualizar progresso da barra
+            let progress = (stepsInView / totalSteps) * 100;
+            progressBar.style.width = `${progress}%`;
+
+            // Atualizar indicadores de passo
+            stepIndicators.forEach((indicator, index) => {
+                if (index < stepsInView) {
+                    indicator.classList.add('active');
+                } else {
+                    indicator.classList.remove('active');
+                }
+            });
+
+            // Mostrar/ocultar botão voltar ao topo
+            if (window.scrollY > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        }
+
+        // Adicionar evento de scroll
+        window.addEventListener('scroll', updateOnScroll);
+
+        // Inicializar animações na carga da página
+        window.addEventListener('load', () => {
+            updateOnScroll();
+            
+            // Animar primeiro card se estiver visível
+            if (stepCards.length > 0 && isElementInViewport(stepCards[0])) {
+                stepCards[0].classList.add('visible');
+            }
+        });
+
+        // Suavizar scroll para âncoras
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // ============ VÍDEO EM LOOP ============
+        const demoVideo = document.getElementById('demoVideo');
+        const videoSource = document.getElementById('videoSource');
+        const videoPlaceholder = document.getElementById('videoPlaceholder');
+        const videoOverlay = document.getElementById('videoOverlay');
+        const videoLoading = document.getElementById('videoLoading');
+
+        // URLs de vídeos de exemplo (você pode substituir pelo seu vídeo)
+        const videoOptions = [
+            {
+                url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
+                title: 'Carro Robô em Ação',
+                description: 'Vídeo demonstrativo do carro robô desviando de obstáculos'
+            },
+            {
+                url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
+                title: 'Funcionamento do Robô',
+                description: 'Demonstração do sistema de desvio de obstáculos'
+            },
+            {
+                url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+                title: 'Testes do Carro Robô',
+                description: 'Vídeo mostrando os testes realizados com o robô'
+            }
+        ];
+
+        // Carregar vídeo aleatório (em produção, use seu próprio vídeo)
+        function loadVideo() {
+            // Se você tiver seu próprio vídeo, substitua esta URL
+            const myVideoUrl = 'videos/carro-robot.mp4.mp4'; // Coloque a URL do seu vídeo aqui
+            
+            let videoToLoad;
+            
+            if (myVideoUrl && myVideoUrl.trim() !== '') {
+                // Usar seu vídeo personalizado
+                videoToLoad = {
+                    url: myVideoUrl,
+                    title: 'Meu Carro Robô em Ação',
+                    description: 'Vídeo do meu projeto funcionando'
+                };
+            } else {
+                // Usar vídeo de exemplo (aleatório)
+                const randomIndex = Math.floor(Math.random() * videoOptions.length);
+                videoToLoad = videoOptions[randomIndex];
+            }
+            
+            // Configurar o vídeo
+            videoSource.src = videoToLoad.url;
+            demoVideo.load();
+            
+            // Atualizar informações do overlay
+            document.querySelector('.video-overlay h3').textContent = videoToLoad.title;
+            document.querySelector('.video-overlay p').textContent = videoToLoad.description;
+            
+            // Configurar eventos do vídeo
+            demoVideo.addEventListener('loadeddata', () => {
+                console.log('Vídeo carregado com sucesso!');
+                
+                // Esconder placeholder e mostrar vídeo
+                setTimeout(() => {
+                    videoPlaceholder.style.display = 'none';
+                    videoOverlay.style.display = 'flex';
+                    videoLoading.style.display = 'none';
+                    
+                    // Iniciar o vídeo em loop
+                    demoVideo.play();
+                    
+                    // Configurar loop infinito
+                    demoVideo.loop = true;
+                    
+                    // Esconder overlay após alguns segundos
+                    setTimeout(() => {
+                        videoOverlay.style.opacity = '0';
+                        setTimeout(() => {
+                            videoOverlay.style.display = 'none';
+                        }, 500);
+                    }, 3000);
+                }, 1000);
+            });
+            
+            demoVideo.addEventListener('error', (e) => {
+                console.error('Erro ao carregar o vídeo:', e);
+                
+                // Mostrar mensagem de erro
+                videoPlaceholder.innerHTML = `
+                    <i class="fas fa-exclamation-triangle" style="color: #ff3e80;"></i>
+                    <h3>Vídeo Não Disponível</h3>
+                    <p>Para ver a demonstração, faça upload do seu vídeo.</p>
+                    <button id="uploadBtn" style="margin-top: 15px; padding: 10px 20px; background: linear-gradient(to right, var(--primary-color), var(--secondary-color)); color: white; border: none; border-radius: 5px; cursor: pointer;">
+                        <i class="fas fa-upload"></i> Instruções para Upload
+                    </button>
+                `;
+                
+                document.getElementById('uploadBtn')?.addEventListener('click', () => {
+                    alert('Para adicionar seu vídeo:\n\n1. Faça upload do seu vídeo no YouTube ou outro serviço\n2. Copie o link de incorporação\n3. Substitua a variável "myVideoUrl" no código JavaScript\n\nLocalize a linha: "const myVideoUrl = \'\';" e cole sua URL entre as aspas.');
+                });
+            });
+            
+            // Mostrar overlay ao passar o mouse
+            const videoContainer = document.querySelector('.video-container');
+            videoContainer.addEventListener('mouseenter', () => {
+                videoOverlay.style.display = 'flex';
+                setTimeout(() => {
+                    videoOverlay.style.opacity = '1';
+                }, 10);
+            });
+            
+            videoContainer.addEventListener('mouseleave', () => {
+                videoOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    if (parseInt(videoOverlay.style.opacity) === 0) {
+                        videoOverlay.style.display = 'none';
+                    }
+                }, 500);
+            });
+        }
+
+        // Carregar vídeo quando a página carregar
+        window.addEventListener('load', loadVideo);
+
+        // ============ CÓDIGO DO CARRO ROBÔ ============
+        const arduinoCode = `// CARRO ARDUINO DESVIO DE OBSTÁCULOS
+// Antes de enviar o código, você precisa instalar as bibliotecas necessárias //
+// Biblioteca AFMotor https://learn.adafruit.com/adafruit-motor-shield/library-install //
+// Biblioteca NewPing https://github.com/livetronic/Arduino-NewPing //
+// Biblioteca Servo https://github.com/arduino-libraries/Servo.git //
+// Para instalar as bibliotecas vá em: Sketch >> Incluir Biblioteca >> Adicionar arquivo .ZIP >> Selecione os arquivos ZIP baixados pelos links acima //
+
+#include <AFMotor.h>  
+#include <NewPing.h>
+#include <Servo.h> 
+
+#define TRIG_PIN A0 
+#define ECHO_PIN A1 
+#define MAX_DISTANCE 200 
+#define MAX_SPEED 190 
+#define MAX_SPEED_OFFSET 20
+
+NewPing sonar(TRIG_PIN, ECHO_PIN, MAX_DISTANCE); 
+
+AF_DCMotor motor1(1, MOTOR12_1KHZ); 
+AF_DCMotor motor2(2, MOTOR12_1KHZ);
+AF_DCMotor motor3(3, MOTOR34_1KHZ);
+AF_DCMotor motor4(4, MOTOR34_1KHZ);
+Servo myservo;   
+
+boolean goesForward=false;
+int distance = 100;
+int speedSet = 0;
+
+void setup() {
+
+  myservo.attach(10);  
+  myservo.write(115); 
+  delay(2000);
+  distance = readPing();
+  delay(100);
+  distance = readPing();
+  delay(100);
+  distance = readPing();
+  delay(100);
+  distance = readPing();
+  delay(100);
+}
+
+void loop() {
+ int distanceR = 0;
+ int distanceL =  0;
+ delay(40);
+ 
+ if(distance<=15)
+ {
+  moveStop();
+  delay(100);
+  moveBackward();
+  delay(300);
+  moveStop();
+  delay(200);
+  distanceR = lookRight();
+  delay(200);
+  distanceL = lookLeft();
+  delay(200);
+
+  if(distanceR>=distanceL)
+  {
+    turnRight();
+    moveStop();
+  }else
+  {
+    turnLeft();
+    moveStop();
+  }
+ }else
+ {
+  moveForward();
+ }
+ distance = readPing();
+}
+
+int lookRight()
+{
+    myservo.write(50); 
+    delay(500);
+    int distance = readPing();
+    delay(100);
+    myservo.write(115); 
+    return distance;
+}
+
+int lookLeft()
+{
+    myservo.write(170); 
+    delay(500);
+    int distance = readPing();
+    delay(100);
+    myservo.write(115); 
+    return distance;
+    delay(100);
+}
+
+int readPing() { 
+  delay(70);
+  int cm = sonar.ping_cm();
+  if(cm==0)
+  {
+    cm = 250;
+  }
+  return cm;
+}
+
+void moveStop() {
+  motor1.run(RELEASE); 
+  motor2.run(RELEASE);
+  motor3.run(RELEASE);
+  motor4.run(RELEASE);
+  } 
+  
+void moveForward() {
+
+ if(!goesForward)
+  {
+    goesForward=true;
+    motor1.run(FORWARD);      
+    motor2.run(FORWARD);
+    motor3.run(FORWARD); 
+    motor4.run(FORWARD);     
+   for (speedSet = 0; speedSet < MAX_SPEED; speedSet +=2) 
+   {
+    motor1.setSpeed(speedSet);
+    motor2.setSpeed(speedSet);
+    motor3.setSpeed(speedSet);
+    motor4.setSpeed(speedSet);
+    delay(5);
+   }
+  }
+}
+
+void moveBackward() {
+    goesForward=false;
+    motor1.run(BACKWARD);      
+    motor2.run(BACKWARD);
+    motor3.run(BACKWARD);
+    motor4.run(BACKWARD);  
+  for (speedSet = 0; speedSet < MAX_SPEED; speedSet +=2) 
+  {
+    motor1.setSpeed(speedSet);
+    motor2.setSpeed(speedSet);
+    motor3.setSpeed(speedSet);
+    motor4.setSpeed(speedSet);
+    delay(5);
+  }
+}  
+
+void turnRight() {
+  motor1.run(FORWARD);
+  motor2.run(FORWARD);
+  motor3.run(BACKWARD);
+  motor4.run(BACKWARD);     
+  delay(500);
+  motor1.run(FORWARD);      
+  motor2.run(FORWARD);
+  motor3.run(FORWARD);
+  motor4.run(FORWARD);      
+} 
+ 
+void turnLeft() {
+  motor1.run(BACKWARD);     
+  motor2.run(BACKWARD);  
+  motor3.run(FORWARD);
+  motor4.run(FORWARD);   
+  delay(500);
+  motor1.run(FORWARD);     
+  motor2.run(FORWARD);
+  motor3.run(FORWARD);
+  motor4.run(FORWARD);
+}`;
+
+        // Download do código
+        document.getElementById('downloadCode').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Criar e simular download do arquivo
+            const blob = new Blob([arduinoCode], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'carro_robo_arduino.ino';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+            
+            // Mostrar feedback
+            showNotification('Código baixado com sucesso!');
+        });
+
+        // Copiar código
+        document.getElementById('copyCode').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Usar a API Clipboard para copiar o texto
+            navigator.clipboard.writeText(arduinoCode)
+                .then(() => {
+                    showNotification('Código copiado para a área de transferência!');
+                })
+                .catch(err => {
+                    // Fallback para navegadores mais antigos
+                    const textArea = document.createElement('textarea');
+                    textArea.value = arduinoCode;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    showNotification('Código copiado para a área de transferência!');
+                });
+        });
+
+        // Função para mostrar notificação
+        function showNotification(message) {
+            const notification = document.getElementById('copyNotification');
+            notification.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Instruções para personalização
+        console.log("=== SITE ATUALIZADO COM VÍDEO EM LOOP ===");
+        console.log("Alterações realizadas:");
+        console.log("1. Vídeo em loop adicionado na seção 'Como Funciona'");
+        console.log("2. Motores DC atualizados para 2x (em vez de 4x)");
+        console.log("3. Vídeo toca automaticamente em loop infinito");
+        console.log("4. Overlay interativo com informações");
+        console.log("");
+        console.log("=== COMO ADICIONAR SEU VÍDEO ===");
+        console.log("1. Faça upload do seu vídeo (10-15 segundos)");
+        console.log("2. Obtenha o link direto para o arquivo .mp4");
+        console.log("3. No código JavaScript, localize a linha:");
+        console.log('   const myVideoUrl = "";');
+        console.log("4. Cole sua URL entre as aspas");
+        console.log("Exemplo: const myVideoUrl = 'https://meusite.com/meu-video.mp4';");
+    </script>
+</body>
+</html>
