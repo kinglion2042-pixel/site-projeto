@@ -911,7 +911,7 @@
                     <div class="step-content">
                         <div class="step-number">1</div>
                         <h3 class="step-title"><span>Passo 1:</span> Montagem da Base</h3>
-                        <p class="step-description">Comece montando a estrutura básica do carro robô. Fixe os motores DC nas laterais da base utilizando os parafusos fornecidos. Certifique-se de que os motores estão firmemente presos e alinhados. Em seguida, instale as rodas nos eixos dos motores. Adicione a roda livre na parte dianteira ou traseira para garantir estabilidade.</p>
+                        <p class="step-description">Comece montando a estrutura base do seu carro. depois Fixe os motores DC nas laterais dianteiras da base utilizando parafusos ou cola(depende do que voce vai usar como base). Certifique-se de que os motores estão firmemente presos e alinhados. Em seguida, instale as rodas nos eixos dos motores. Adicione rodas livres(sem motores) na parte traseira para garantir estabilidade(RECOMENDO COMPRAR UM CARRINHO DE BRINQUEDO 30 × 20 × 15 cm).</p>
                     </div>
                 </div>
 
@@ -921,7 +921,7 @@
                     <div class="step-content">
                         <div class="step-number">2</div>
                         <h3 class="step-title"><span>Passo 2:</span> Instalação do Arduino e Shield</h3>
-                        <p class="step-description">Conecte o Arduino UNO ao Adafruit Motor Shield. Fixe essa combinação na parte superior da base do carro. O Motor Shield será responsável por controlar a velocidade e direção dos 2 motores DC. Conecte a fonte de alimentação (bateria Li-Ion) ao shield, tomando cuidado com a polaridade.</p>
+                        <p class="step-description">Caso Seu carrinho seja igual o meu abra o chassi do carrinho e bote o arduino dentro dele depois Conecte o Arduino UNO ao Motor Shield. Fixe essa combinação na parte superior da base do carro. O Motor Shield será responsável por controlar a velocidade e direção dos 2 motores DC.cole a fonte de alimentação(bateria Li-Ion) na parte de baixo do seu carrinho depois conecte o fio vermelho no (+M) e o fio Preto no (GND), tomando cuidado com a polaridade.</p>
                     </div>
                 </div>
 
@@ -931,7 +931,7 @@
                     <div class="step-content">
                         <div class="step-number">3</div>
                         <h3 class="step-title"><span>Passo 3:</span> Conexão dos Motores e Sensor</h3>
-                        <p class="step-description">Conecte os fios dos 2 motores DC às saídas do Motor Shield (M1 e M2). Instale o sensor ultrassônico HC-SR04 na parte frontal do carro, montado no servo motor para permitir varredura. Conecte o sensor ao Arduino: VCC no 5V, GND no GND, Trig no pino A0 e Echo no pino A1.</p>
+                        <p class="step-description">Conecte os fios dos 2 motores DC às saídas do Motor Shield (M2 e M3). Instale o sensor ultrassônico HC-SR04 na parte frontal do carro, montado no servo motor para permitir varredura. Conecte o sensor ao shield: VCC no 5V, GND no GND, Trig no pino A0 e Echo no pino A1.</p>
                     </div>
                 </div>
 
@@ -941,7 +941,7 @@
                     <div class="step-content">
                         <div class="step-number">4</div>
                         <h3 class="step-title"><span>Passo 4:</span> Instalação do Servo Motor</h3>
-                        <p class="step-description">Monte o servo motor SG90 na parte dianteira do carro, conectado ao suporte do sensor ultrassônico. O servo permitirá que o sensor gire para os lados para verificar a melhor direção. Conecte o servo ao Arduino: fio vermelho no 5V, marrom no GND e laranja no pino 10. Teste o movimento do servo com um código básico antes de prosseguir.</p>
+                        <p class="step-description">Monte o servo motor SG90 na parte dianteira do carro, conectado ao suporte do sensor ultrassônico. O servo permitirá que o sensor gire para os lados para verificar a melhor direção. Conecte o servo ao shield: fio vermelho no 5V, marrom no GND e laranja no pino 10. Teste o movimento do servo com um código básico antes de prosseguir.</p>
                     </div>
                 </div>
 
@@ -951,7 +951,7 @@
                     <div class="step-content">
                         <div class="step-number">5</div>
                         <h3 class="step-title"><span>Passo 5:</span> Programação do Arduino</h3>
-                        <p class="step-description">Conecte o Arduino ao computador via cabo USB. Abra a IDE do Arduino e crie um novo sketch. Instale as bibliotecas necessárias: AFMotor, NewPing e Servo. Programe a lógica: leitura do sensor ultrassônico, controle dos 2 motores através do Motor Shield, e movimento do servo para verificar direções. Faça upload do código para o Arduino.</p>
+                        <p class="step-description">Conecte o Arduino ao computador via cabo USB. Abra a IDE do Arduino e crie um novo sketch. Instale as bibliotecas necessárias: AFMotor, NewPing e Servo. use o codigo que deixei abaixo nele ja tem tudo: leitura do sensor ultrassônico, controle dos 2 motores através do Motor Shield, e movimento do servo para verificar direções. Faça upload do código para o Arduino.</p>
                     </div>
                 </div>
 
@@ -961,7 +961,7 @@
                     <div class="step-content">
                         <div class="step-number">6</div>
                         <h3 class="step-title"><span>Passo 6:</span> Testes e Ajustes Finais</h3>
-                        <p class="step-description">Desconecte o Arduino do computador e alimente o sistema com a bateria. Teste o funcionamento do carro em uma área livre com obstáculos. Observe se ele detecta obstáculos corretamente, dá ré, verifica as direções e muda de direção. Ajuste parâmetros no código como distância de detecção, velocidade dos motores e ângulo de virada. Faça os ajustes necessários até o carro funcionar perfeitamente.</p>
+                        <p class="step-description">Desconecte o Arduino do computador e alimente o sistema com a bateria. Teste o funcionamento do carro em uma área livre com obstáculos. Observe se ele detecta obstáculos corretamente, dá ré, verifica as direções e muda de direção. faça ajustes caso queira deixar o carro mas rapido.</p>
                     </div>
                 </div>
             </div>
@@ -1001,7 +1001,7 @@
                 <div class="component-card">
                     <img src="https://imgs.search.brave.com/vEB6iEknFqNCRtuQvQzHiToYrhq3sTF5tM6ukYdVmPw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9odHRw/Mi5tbHN0YXRpYy5j/b20vRF9RX05QXzJY/XzkwNzAyNy1NTEE4/Mjk2NjUzNzMxMV8w/MzIwMjUtRS53ZWJw" alt="Driver de Motor L298N" class="component-image">
                     <div class="component-content">
-                        <h3>Driver L298N</h3>
+                        <h3>Motor Shield L293D</h3>
                         <p>Controla a velocidade e direção dos dois motores DC do carro.</p>
                     </div>
                 </div>
