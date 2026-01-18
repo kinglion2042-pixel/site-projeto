@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carro Robô Arduino Desviador de Obstáculos</title>
+    <title>Carro Arduino Desviador de Obstáculos</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Reset e configurações gerais */
@@ -139,14 +139,11 @@
             color: white;
         }
 
-        /* Seção Hero */
+        /* Seção Hero - SEM IMAGEM DE FUNDO */
         .hero {
             text-align: center;
             padding: 130px 0 90px;
-            background: linear-gradient(rgba(10, 10, 18, 0.9), rgba(10, 10, 18, 0.9)), url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            background: var(--dark-bg);
             position: relative;
             overflow: hidden;
         }
@@ -185,18 +182,7 @@
             color: var(--gray-text);
         }
 
-        .project-image {
-            width: 100%;
-            max-width: 800px;
-            height: 400px;
-            object-fit: cover;
-            border-radius: var(--border-radius);
-            margin-top: 40px;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border-color);
-        }
-
-        /* Seção de introdução com vídeo */
+        /* Seção de introdução */
         .intro {
             background-color: var(--darker-bg);
         }
@@ -232,102 +218,25 @@
             font-size: 1.1rem;
         }
 
-        .intro-video {
+        .intro-image {
             flex: 1;
             min-width: 300px;
             border-radius: var(--border-radius);
             overflow: hidden;
             box-shadow: var(--shadow);
             border: 1px solid var(--border-color);
-            position: relative;
         }
 
-        .video-container {
+        .intro-image img {
             width: 100%;
-            height: 100%;
-            min-height: 400px;
-            background-color: #000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .video-container video {
-            width: 100%;
-            height: 100%;
+            height: 400px;
             object-fit: cover;
-        }
-
-        .video-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 20px;
-            z-index: 2;
+            display: block;
             transition: var(--transition);
         }
 
-        .video-overlay:hover {
-            background: rgba(0, 0, 0, 0.3);
-        }
-
-        .video-overlay h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: white;
-        }
-
-        .video-overlay p {
-            color: #ddd;
-            margin-bottom: 20px;
-            max-width: 400px;
-        }
-
-        .video-loading {
-            font-size: 3rem;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-            animation: spin 2s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .video-placeholder {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(45deg, #0a0a12, #151520);
-            z-index: 1;
-        }
-
-        .video-placeholder i {
-            font-size: 4rem;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-        }
-
-        .video-placeholder h3 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            color: var(--light-text);
+        .intro-image:hover img {
+            transform: scale(1.03);
         }
 
         /* Seção de tutorial */
@@ -481,7 +390,7 @@
             font-size: 1.1rem;
         }
 
-        /* Seção de componentes */
+        /* Seção de componentes - ATUALIZADA COM 10 COMPONENTES */
         .components {
             background-color: var(--darker-bg);
         }
@@ -511,7 +420,7 @@
 
         .component-image {
             width: 100%;
-            height: 180px;
+            height: 290px;
             object-fit: cover;
             display: block;
         }
@@ -804,7 +713,7 @@
                 height: 280px;
             }
             
-            .project-image {
+            .intro-image img {
                 height: 350px;
             }
         }
@@ -866,10 +775,6 @@
                 flex-direction: column;
             }
             
-            .video-container {
-                min-height: 350px;
-            }
-            
             .code-buttons {
                 flex-direction: column;
                 align-items: center;
@@ -906,7 +811,7 @@
                 padding: 25px;
             }
             
-            .project-image {
+            .intro-image img {
                 height: 250px;
             }
             
@@ -927,10 +832,6 @@
             .code-preview pre {
                 font-size: 0.75rem;
             }
-            
-            .video-container {
-                min-height: 300px;
-            }
         }
     </style>
 </head>
@@ -939,8 +840,8 @@
     <header>
         <div class="container header-container">
             <div class="logo">
-                <h1>Carro Robô Arduino Desviador de Obstáculos</h1>
-                <p>Projeto Arduino - Robótica Educacional</p>
+                <h1>Carro Arduino Desviador de Obstáculos</h1>
+                <p>Projeto Arduino - Curso MicroCamp</p>
             </div>
             
             <div class="menu-toggle" id="menuToggle">
@@ -959,16 +860,15 @@
         </div>
     </header>
 
-    <!-- Seção Hero -->
+    <!-- Seção Hero - SEM IMAGEM DE FUNDO -->
     <section class="hero" id="inicio">
         <div class="container">
             <h2>Carro Arduino Desviador de Obstáculos</h2>
             <p>Um robô inteligente que detecta obstáculos, recua automaticamente, muda de direção e continua seu caminho. Projeto ideal para aprender robótica, programação e eletrônica com Arduino.</p>
-            <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Carro robô com Arduino" class="project-image">
         </div>
     </section>
 
-    <!-- Seção de Introdução com Vídeo -->
+    <!-- Seção de Introdução -->
     <section class="intro" id="introducao">
         <div class="container">
             <div class="intro-content">
@@ -980,33 +880,10 @@
                     <p><strong>3.</strong> Vira para uma nova direção livre de obstáculos</p>
                     <p><strong>4.</strong> Continua seguindo em frente até encontrar outro obstáculo</p>
                     <p>O controle principal é feito por um Arduino UNO, que processa os dados do sensor e comanda os motores através de um driver L298N.</p>
-                    <p><strong>Assista ao vídeo ao lado para ver o carro em ação!</strong></p>
                 </div>
-                <div class="intro-video">
-                    <div class="video-container">
-                        <!-- Vídeo em loop -->
-                        <video id="demoVideo" autoplay muted loop playsinline>
-                            <source id="videoSource" type="video/mp4">
-                            Seu navegador não suporta a tag de vídeo.
-                        </video>
-                        
-                        <!-- Overlay com informações -->
-                        <div class="video-overlay" id="videoOverlay">
-                            <div class="video-loading" id="videoLoading">
-                                <i class="fas fa-sync-alt"></i>
-                            </div>
-                            <h3>Carro Robô em Ação</h3>
-                            <p>Vídeo demonstrativo do carro robô desviando de obstáculos em tempo real</p>
-                            <p><small>Vídeo em loop - 15 segundos</small></p>
-                        </div>
-                        
-                        <!-- Placeholder se o vídeo não carregar -->
-                        <div class="video-placeholder" id="videoPlaceholder">
-                            <i class="fas fa-robot"></i>
-                            <h3>Demonstração do Carro Robô</h3>
-                            <p>Carregando vídeo demonstrativo...</p>
-                        </div>
-                    </div>
+                <div class="intro-image">
+                    <!-- Imagem ilustrativa que você pode substituir depois -->
+                    <img src="carro_convertido.png" alt="Carro Arduino em funcionamento">
                 </div>
             </div>
         </div>
@@ -1091,14 +968,14 @@
         </div>
     </section>
 
-    <!-- Seção de Componentes -->
+    <!-- Seção de Componentes - ATUALIZADA COM 10 COMPONENTES -->
     <section class="components" id="componentes">
         <div class="container">
             <h2 class="section-title">Componentes Utilizados</h2>
             
             <div class="components-grid">
                 <div class="component-card">
-                    <img src="https://imgs.search.brave.com/ovqL8gA6q9eO8xua5zqDxIGwhmT-9fv6ECdw6V31InI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90aHVt/YnMuZHJlYW1zdGlt/ZS5jb20vYi9hcmR1/aW5vLXVuby1ib2Fy/ZC1ibGFjay1iYWNr/Z3JvdW5kLXNhbmt0/LXBldGVyc2J1cmct/cnVzc2lhLWZlYnJ1/YXJ5LWNsb3NlLXVw/LW1pY3JvY29udHJv/bGxlci1wcm9ncmFt/bWluZy0xODQyODA4/OTIuanBn" alt="Arduino UNO" class="component-image">
+                    <img src="https://imgs.search.brave.com/r9A_CZgWT4MFpPNxAeaGTU3YuelckKR4vZDwzLEpEAM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMudGNkbi5jb20u/YnIvaW1nL2ltZ19w/cm9kLzY3MjQ4Ni8x/ODBfcGxhY2FfdW5v/X3IzX2F0bWVnYTMy/OF9jb21fY2Fib191/c2JfY29tcGF0aXZl/bF9jb21fYXJkdWlu/b18zXzJfY2FiYzAy/N2NkMWJkMzM0OTZh/ZDUxNGNmNjQ3ZWY1/ODJfMjAyNDExMjgx/MDM5MDQuanBn" alt="Arduino UNO" class="component-image">
                     <div class="component-content">
                         <h3>Arduino UNO</h3>
                         <p>Microcontrolador principal que processa os dados do sensor e controla os motores.</p>
@@ -1106,7 +983,7 @@
                 </div>
                 
                 <div class="component-card">
-                    <img src="https://imgs.search.brave.com/kUsw2jMzXDmdSUNMxCJmoAZqjRJx9BAiE6Zgosw-oSg/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/YXdzbGkuY29tLmJy/LzYwMHgxMDAwLzI0/MDYvMjQwNjA3OS9w/cm9kdXRvLzIxOTAx/MzkwOC82MjBfMV9o/LXRjNW50b2s3d3Mu/cG5n" alt="Sensor Ultrassônico HC-SR04" class="component-image">
+                    <img src="https://imgs.search.brave.com/XcSDvIsn4mvC9PVQZLruUVtnyY95bj8QBSEAInmrpOc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9odHRw/Mi5tbHN0YXRpYy5j/b20vRF9RX05QXzJY/XzkzOTIwNS1NTEE5/NTc0MTMxOTA5Nl8x/MDIwMjUtRS53ZWJw" alt="Sensor Ultrassônico HC-SR04" class="component-image">
                     <div class="component-content">
                         <h3>Sensor Ultrassônico HC-SR04</h3>
                         <p>Detecta obstáculos medindo a distância através de ondas sonoras.</p>
@@ -1114,7 +991,7 @@
                 </div>
                 
                 <div class="component-card">
-                    <img src="https://imgs.search.brave.com/hHZx8pwuMFDkNSq-eT9048C4vNRuAeg4INcyE_4-8vY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/Ym9kYW5pdXMuY29t/L21lZGlhLzEvMmVk/MTAyOTc5X3Rvd2Vy/cHJvLXNnOTAtOWct/bWljcm8tc2Vydm8t/bW90b3JfeC5wbmc" alt="Servo Motor SG90" class="component-image">
+                    <img src="https://imgs.search.brave.com/90e2hWwS1aM4mnNYwhC-3L6VO1Itm-2II7zBLY2K63w/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9odHRw/Mi5tbHN0YXRpYy5j/b20vRF9RX05QXzJY/XzcyNjgzMS1NTEI0/MzQ2MDM4OTE5Nl8w/OTIwMjAtRS53ZWJw" alt="Servo Motor SG90" class="component-image">
                     <div class="component-content">
                         <h3>Servo Motor SG90</h3>
                         <p>Controla a direção do sensor ultrassônico para verificar obstáculos laterais.</p>
@@ -1122,15 +999,15 @@
                 </div>
                 
                 <div class="component-card">
-                    <img src="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Adafruit Motor Shield" class="component-image">
+                    <img src="https://imgs.search.brave.com/vEB6iEknFqNCRtuQvQzHiToYrhq3sTF5tM6ukYdVmPw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9odHRw/Mi5tbHN0YXRpYy5j/b20vRF9RX05QXzJY/XzkwNzAyNy1NTEE4/Mjk2NjUzNzMxMV8w/MzIwMjUtRS53ZWJw" alt="Driver de Motor L298N" class="component-image">
                     <div class="component-content">
-                        <h3>Adafruit Motor Shield</h3>
-                        <p>Controla a velocidade e direção dos dois motores DC do carro robô.</p>
+                        <h3>Driver L298N</h3>
+                        <p>Controla a velocidade e direção dos dois motores DC do carro.</p>
                     </div>
                 </div>
                 
                 <div class="component-card">
-                    <img src="https://imgs.search.brave.com/mIBiD0urFGM5poAQCCPmxgdHSUCnRvl2o2rKN55E55A/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tdmVs/ZWN0cm9uaWNhLnMz/LnVzLWVhc3QtMi5h/bWF6b25hd3MuY29t/L3Byb2R1Y3Rvcy9N/T1Q0OEEvNjExNWEx/ODM2MWVlZi53ZWJw" alt="Motores DC" class="component-image">
+                    <img src="https://imgs.search.brave.com/AGNByciMEi793Wjb9p78DBrAAa9sweOq09MOvPp6mms/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMudGNkbi5jb20u/YnIvaW1nL2ltZ19w/cm9kLzY1MDM2MS9y/b2RhX2NvbV9wbmV1/X21vdG9yX2RjXzNf/YV82dl9jb21fcmVk/dWNhb18xNjkxXzhf/YjBjZGFiYzBjYTA4/ZTY4YjUwNWFjNzM5/OTVlNjc0OTEuanBn" alt="Motores DC" class="component-image">
                     <div class="component-content">
                         <h3>Motores DC (x2)</h3>
                         <p>Fornecem a tração para o carro se mover para frente, trás e fazer curvas.</p>
@@ -1142,6 +1019,31 @@
                     <div class="component-content">
                         <h3>Bateria Li-Ion 2200mAh 3,7V</h3>
                         <p>Fonte de energia para todo o sistema (Arduino, motores e sensores).</p>
+                    </div>
+                </div>
+                
+                <!-- NOVOS COMPONENTES ADICIONADOS -->
+                <div class="component-card">
+                    <img src="https://imgs.search.brave.com/aYyb0_7AGTPq-Tcysim7WiITMxuPZp0DZ_n6qHR2TxE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9odHRw/Mi5tbHN0YXRpYy5j/b20vRF9RX05QXzJY/XzY4MDgwNC1NTEI3/MDA5MTcxNDg4N18w/NjIwMjMtRS1jYWl4/YS1jYXNlLXN1cG9y/dGUtYmF0ZXJpYS1w/aWxoYS0yLTE4NjUw/LTc0di1hcmR1aW5v/LTJzLndlYnA" alt="Holder para Bateria" class="component-image">
+                    <div class="component-content">
+                        <h3>Holder para Bateria</h3>
+                        <p>Suporte para fixar a bateria Li-Ion na estrutura do carro robô.</p>
+                    </div>
+                </div>
+                
+                <div class="component-card">
+                    <img src="https://imgs.search.brave.com/dpksBIi8KuAnXVC9NguN6cHgjWXFjEk2H_lJgk5J6tA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/dGFsb3NlbGVjdHJv/bmljcy5jb20vY2Ru/L3Nob3AvcHJvZHVj/dHMvc29wb3J0ZV9w/YXJhX3NlbnNvcl91/bHRyYXNvbmljb19t/ZXhpY29famFsaXNj/b19ndWFkYWxhamFy/YV80NTZmMThiNi0w/Mjg1LTQ3OWQtOWI2/MS1hOTg5YThmNTNi/OGFfNzAweDcwMC5K/UEc_dj0xNTkzODE3/OTg5" alt="Holder para Sensor" class="component-image">
+                    <div class="component-content">
+                        <h3>Holder para Sensor</h3>
+                        <p>Suporte para fixar o sensor ultrassônico HC-SR04 no servo motor.</p>
+                    </div>
+                </div>
+                
+                <div class="component-card">
+                    <img src="https://imgs.search.brave.com/fQ2Y5Fc7a2Uf1MbdWoP-VgyiwmiSitN9gYvLJ1Wb0hY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/YXdzbGkuY29tLmJy/LzYwMHg3MDAvNDY4/LzQ2ODE2Mi9wcm9k/dXRvLzE5NDE0MzE4/ZjI1NjRjNmZiZi5q/cGc" alt="Rodas para Robô" class="component-image">
+                    <div class="component-content">
+                        <h3>Rodas para Robô (x2)</h3>
+                        <p>Rodas de borracha com diâmetro de 65mm para tração do carro.</p>
                     </div>
                 </div>
                 
@@ -1159,7 +1061,7 @@
     <!-- Seção de Código -->
     <section class="code-section" id="codigos">
         <div class="container">
-            <h2 class="section-title">Código do Carro Robô</h2>
+            <h2 class="section-title">Código do Carro Arduino</h2>
             
             <div class="code-container">
                 <div class="code-card">
@@ -1370,7 +1272,7 @@
                 </div>
                 <div class="footer-info">
                     <h4>Informações do Projeto</h4>
-                    <p><i class="fas fa-user"></i> <strong>Desenvolvedor:</strong> [Diogo Santos]</p>
+                    <p><i class="fas fa-user"></i> <strong>Desenvolvedor:</strong> Diogo Santos</p>
                     <p><i class="fas fa-graduation-cap"></i> <strong>Nível:</strong> Intermediário</p>
                     <p><i class="fas fa-clock"></i> <strong>Tempo Estimado:</strong> 4-6 horas</p>
                 </div>
@@ -1500,126 +1402,6 @@
                 }
             });
         });
-
-        // ============ VÍDEO EM LOOP ============
-        const demoVideo = document.getElementById('demoVideo');
-        const videoSource = document.getElementById('videoSource');
-        const videoPlaceholder = document.getElementById('videoPlaceholder');
-        const videoOverlay = document.getElementById('videoOverlay');
-        const videoLoading = document.getElementById('videoLoading');
-
-        // URLs de vídeos de exemplo (você pode substituir pelo seu vídeo)
-        const videoOptions = [
-            {
-                url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
-                title: 'Carro Robô em Ação',
-                description: 'Vídeo demonstrativo do carro robô desviando de obstáculos'
-            },
-            {
-                url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
-                title: 'Funcionamento do Robô',
-                description: 'Demonstração do sistema de desvio de obstáculos'
-            },
-            {
-                url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-                title: 'Testes do Carro Robô',
-                description: 'Vídeo mostrando os testes realizados com o robô'
-            }
-        ];
-
-        // Carregar vídeo aleatório (em produção, use seu próprio vídeo)
-        function loadVideo() {
-            // Se você tiver seu próprio vídeo, substitua esta URL
-            const myVideoUrl = 'videos/carro-robot.mp4.mp4'; // Coloque a URL do seu vídeo aqui
-            
-            let videoToLoad;
-            
-            if (myVideoUrl && myVideoUrl.trim() !== '') {
-                // Usar seu vídeo personalizado
-                videoToLoad = {
-                    url: myVideoUrl,
-                    title: 'Meu Carro Robô em Ação',
-                    description: 'Vídeo do meu projeto funcionando'
-                };
-            } else {
-                // Usar vídeo de exemplo (aleatório)
-                const randomIndex = Math.floor(Math.random() * videoOptions.length);
-                videoToLoad = videoOptions[randomIndex];
-            }
-            
-            // Configurar o vídeo
-            videoSource.src = videoToLoad.url;
-            demoVideo.load();
-            
-            // Atualizar informações do overlay
-            document.querySelector('.video-overlay h3').textContent = videoToLoad.title;
-            document.querySelector('.video-overlay p').textContent = videoToLoad.description;
-            
-            // Configurar eventos do vídeo
-            demoVideo.addEventListener('loadeddata', () => {
-                console.log('Vídeo carregado com sucesso!');
-                
-                // Esconder placeholder e mostrar vídeo
-                setTimeout(() => {
-                    videoPlaceholder.style.display = 'none';
-                    videoOverlay.style.display = 'flex';
-                    videoLoading.style.display = 'none';
-                    
-                    // Iniciar o vídeo em loop
-                    demoVideo.play();
-                    
-                    // Configurar loop infinito
-                    demoVideo.loop = true;
-                    
-                    // Esconder overlay após alguns segundos
-                    setTimeout(() => {
-                        videoOverlay.style.opacity = '0';
-                        setTimeout(() => {
-                            videoOverlay.style.display = 'none';
-                        }, 500);
-                    }, 3000);
-                }, 1000);
-            });
-            
-            demoVideo.addEventListener('error', (e) => {
-                console.error('Erro ao carregar o vídeo:', e);
-                
-                // Mostrar mensagem de erro
-                videoPlaceholder.innerHTML = `
-                    <i class="fas fa-exclamation-triangle" style="color: #ff3e80;"></i>
-                    <h3>Vídeo Não Disponível</h3>
-                    <p>Para ver a demonstração, faça upload do seu vídeo.</p>
-                    <button id="uploadBtn" style="margin-top: 15px; padding: 10px 20px; background: linear-gradient(to right, var(--primary-color), var(--secondary-color)); color: white; border: none; border-radius: 5px; cursor: pointer;">
-                        <i class="fas fa-upload"></i> Instruções para Upload
-                    </button>
-                `;
-                
-                document.getElementById('uploadBtn')?.addEventListener('click', () => {
-                    alert('Para adicionar seu vídeo:\n\n1. Faça upload do seu vídeo no YouTube ou outro serviço\n2. Copie o link de incorporação\n3. Substitua a variável "myVideoUrl" no código JavaScript\n\nLocalize a linha: "const myVideoUrl = \'\';" e cole sua URL entre as aspas.');
-                });
-            });
-            
-            // Mostrar overlay ao passar o mouse
-            const videoContainer = document.querySelector('.video-container');
-            videoContainer.addEventListener('mouseenter', () => {
-                videoOverlay.style.display = 'flex';
-                setTimeout(() => {
-                    videoOverlay.style.opacity = '1';
-                }, 10);
-            });
-            
-            videoContainer.addEventListener('mouseleave', () => {
-                videoOverlay.style.opacity = '0';
-                setTimeout(() => {
-                    if (parseInt(videoOverlay.style.opacity) === 0) {
-                        videoOverlay.style.display = 'none';
-                    }
-                }, 500);
-            });
-        }
-
-        // Carregar vídeo quando a página carregar
-        window.addEventListener('load', loadVideo);
 
         // ============ CÓDIGO DO CARRO ROBÔ ============
         const arduinoCode = `// CARRO ARDUINO DESVIO DE OBSTÁCULOS
@@ -1849,21 +1631,13 @@ void turnLeft() {
             }, 3000);
         }
 
-        // Instruções para personalização
-        console.log("=== SITE ATUALIZADO COM VÍDEO EM LOOP ===");
-        console.log("Alterações realizadas:");
-        console.log("1. Vídeo em loop adicionado na seção 'Como Funciona'");
-        console.log("2. Motores DC atualizados para 2x (em vez de 4x)");
-        console.log("3. Vídeo toca automaticamente em loop infinito");
-        console.log("4. Overlay interativo com informações");
-        console.log("");
-        console.log("=== COMO ADICIONAR SEU VÍDEO ===");
-        console.log("1. Faça upload do seu vídeo (10-15 segundos)");
-        console.log("2. Obtenha o link direto para o arquivo .mp4");
-        console.log("3. No código JavaScript, localize a linha:");
-        console.log('   const myVideoUrl = "";');
-        console.log("4. Cole sua URL entre as aspas");
-        console.log("Exemplo: const myVideoUrl = 'https://meusite.com/meu-video.mp4';");
+        // Instruções no console
+        console.log("=== SITE FINALIZADO ===");
+        console.log("✅ Removidos os 3 cards de features da seção Hero");
+        console.log("✅ Removida a lista 'Este projeto é perfeito para quem está aprendendo:'");
+        console.log("✅ Mantidos todos os 10 componentes na seção de componentes");
+        console.log("✅ Site limpo e focado apenas no conteúdo principal");
+        console.log("✅ Pronto para uso!");
     </script>
 </body>
 </html>
