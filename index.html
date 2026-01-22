@@ -49,20 +49,18 @@
         }
 
         section {
-            padding: 90px 0;
+            padding: 70px 0;
         }
 
-        /* Estilos do cabeçalho */
+        /* Cabeçalho NÃO FIXO */
         header {
-            background: linear-gradient(135deg, rgba(0, 149, 255, 0.9), rgba(0, 212, 255, 0.9));
+            background: rgba(0, 149, 255, 0.95);
             color: white;
-            padding: 22px 0;
-            position: sticky;
-            top: 0;
+            padding: 15px 0;
             z-index: 1000;
             box-shadow: var(--shadow);
-            backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(0, 212, 255, 0.3);
+            position: relative;
         }
 
         .header-container {
@@ -77,18 +75,14 @@
         }
 
         .logo h1 {
-            font-size: 1.9rem;
-            margin-bottom: 5px;
-            background: linear-gradient(to right, #fff, #00d4ff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
-            letter-spacing: 0.5px;
+            font-size: 1.5rem;
+            margin-bottom: 4px;
+            color: white;
+            letter-spacing: 0.3px;
         }
 
         .logo p {
-            font-size: 1rem;
+            font-size: 0.85rem;
             opacity: 0.9;
             color: #fff;
             font-weight: 500;
@@ -100,7 +94,7 @@
         }
 
         nav li {
-            margin-left: 25px;
+            margin-left: 20px;
         }
 
         nav a {
@@ -108,9 +102,9 @@
             text-decoration: none;
             font-weight: 500;
             transition: var(--transition);
-            padding: 8px 0;
+            padding: 6px 0;
             position: relative;
-            font-size: 1.05rem;
+            font-size: 1rem;
         }
 
         nav a:hover {
@@ -134,15 +128,15 @@
 
         .menu-toggle {
             display: none;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             cursor: pointer;
             color: white;
         }
 
-        /* Seção Hero - SEM IMAGEM DE FUNDO */
+        /* Seção Hero */
         .hero {
             text-align: center;
-            padding: 130px 0 90px;
+            padding: 100px 0 60px;
             background: var(--dark-bg);
             position: relative;
             overflow: hidden;
@@ -166,19 +160,15 @@
         }
 
         .hero h2 {
-            font-size: 3.2rem;
-            margin-bottom: 25px;
-            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 25px rgba(0, 212, 255, 0.4);
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
         }
 
         .hero p {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             max-width: 850px;
-            margin: 0 auto 40px;
+            margin: 0 auto 30px;
             color: var(--gray-text);
         }
 
@@ -191,7 +181,7 @@
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-            gap: 50px;
+            gap: 40px;
         }
 
         .intro-text {
@@ -200,21 +190,18 @@
         }
 
         .intro-text h2 {
-            font-size: 2.5rem;
-            margin-bottom: 25px;
+            font-size: 2rem;
+            margin-bottom: 20px;
             color: var(--light-text);
         }
 
         .intro-text h2 span {
-            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            color: var(--primary-color);
         }
 
         .intro-text p {
             color: var(--gray-text);
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             font-size: 1.1rem;
         }
 
@@ -229,7 +216,7 @@
 
         .intro-image img {
             width: 100%;
-            height: 400px;
+            height: 350px;
             object-fit: cover;
             display: block;
             transition: var(--transition);
@@ -246,8 +233,8 @@
 
         .section-title {
             text-align: center;
-            font-size: 2.8rem;
-            margin-bottom: 70px;
+            font-size: 2.2rem;
+            margin-bottom: 50px;
             position: relative;
             color: var(--light-text);
         }
@@ -255,63 +242,18 @@
         .section-title::after {
             content: '';
             position: absolute;
-            width: 120px;
+            width: 100px;
             height: 4px;
             background: linear-gradient(to right, var(--primary-color), var(--accent-color));
-            bottom: -15px;
+            bottom: -12px;
             left: 50%;
             transform: translateX(-50%);
             border-radius: 2px;
         }
 
+        /* REMOVIDA A RÉGUA DE 1 A 6 */
         .progress-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 60px;
-        }
-
-        .progress-bar {
-            width: 80%;
-            height: 10px;
-            background-color: var(--card-bg);
-            border-radius: 5px;
-            position: relative;
-            margin: 0 20px;
-            overflow: hidden;
-            border: 1px solid var(--border-color);
-        }
-
-        .progress {
-            height: 100%;
-            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
-            border-radius: 5px;
-            width: 0%;
-            transition: var(--transition);
-        }
-
-        .step-indicator {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 55px;
-            height: 55px;
-            background-color: var(--card-bg);
-            color: var(--gray-text);
-            border-radius: 50%;
-            font-weight: bold;
-            font-size: 1.2rem;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            border: 2px solid transparent;
-        }
-
-        .step-indicator.active {
-            background-color: var(--primary-color);
-            color: white;
-            transform: scale(1.1);
-            box-shadow: var(--glow);
-            border-color: var(--primary-color);
+            display: none;
         }
 
         /* Cards do tutorial */
@@ -323,7 +265,7 @@
             background-color: var(--card-bg);
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
-            margin-bottom: 50px;
+            margin-bottom: 40px;
             overflow: hidden;
             opacity: 0;
             transform: translateY(30px);
@@ -338,12 +280,12 @@
 
         .step-card:hover {
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
-            transform: translateY(-8px);
+            transform: translateY(-5px);
         }
 
         .step-image {
             width: 100%;
-            height: 320px;
+            height: 280px;
             object-fit: cover;
             display: block;
             transition: var(--transition);
@@ -354,29 +296,29 @@
         }
 
         .step-content {
-            padding: 35px;
+            padding: 30px;
         }
 
         .step-number {
             display: inline-block;
-            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            background: var(--primary-color);
             color: white;
-            width: 55px;
-            height: 55px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             text-align: center;
-            line-height: 55px;
+            line-height: 50px;
             font-weight: bold;
-            margin-bottom: 20px;
-            font-size: 1.3rem;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
             box-shadow: var(--glow);
         }
 
         .step-title {
-            font-size: 1.8rem;
-            margin-bottom: 18px;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
             color: var(--light-text);
-            padding-bottom: 15px;
+            padding-bottom: 12px;
             border-bottom: 2px solid rgba(255, 255, 255, 0.08);
         }
 
@@ -386,20 +328,20 @@
 
         .step-description {
             color: var(--gray-text);
-            line-height: 1.8;
-            font-size: 1.1rem;
+            line-height: 1.7;
+            font-size: 1rem;
         }
 
-        /* Seção de componentes - ATUALIZADA COM 10 COMPONENTES */
+        /* Seção de componentes */
         .components {
             background-color: var(--darker-bg);
         }
 
         .components-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
         }
 
         .component-card {
@@ -413,31 +355,32 @@
         }
 
         .component-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-8px);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
             border-color: var(--primary-color);
         }
 
         .component-image {
             width: 100%;
-            height: 290px;
+            height: 250px;
             object-fit: cover;
             display: block;
         }
 
         .component-content {
-            padding: 25px;
+            padding: 20px;
         }
 
         .component-card h3 {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             margin-bottom: 10px;
             color: var(--light-text);
         }
 
         .component-card p {
             color: var(--gray-text);
-            font-size: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
         }
 
         /* Seção de códigos */
@@ -448,8 +391,8 @@
         .code-container {
             display: flex;
             justify-content: center;
-            gap: 40px;
-            margin-top: 50px;
+            gap: 30px;
+            margin-top: 40px;
         }
 
         .code-card {
@@ -457,7 +400,7 @@
             width: 100%;
             background-color: var(--card-bg);
             border-radius: var(--border-radius);
-            padding: 40px;
+            padding: 30px;
             text-align: center;
             transition: var(--transition);
             border: 1px solid var(--border-color);
@@ -465,89 +408,87 @@
         }
 
         .code-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-8px);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
             border-color: var(--primary-color);
         }
 
         .code-icon {
-            font-size: 4rem;
-            margin-bottom: 25px;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
             color: var(--primary-color);
         }
 
         .code-card h3 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
+            font-size: 1.6rem;
+            margin-bottom: 15px;
             color: var(--light-text);
         }
 
         .code-card p {
             color: var(--gray-text);
-            margin-bottom: 25px;
-            font-size: 1.1rem;
+            margin-bottom: 20px;
+            font-size: 1rem;
         }
 
         .code-buttons {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
             flex-wrap: wrap;
-            margin-top: 20px;
+            margin-top: 15px;
         }
 
         .download-btn, .copy-btn {
             display: inline-block;
-            padding: 15px 30px;
+            padding: 14px 28px;
             color: white;
             text-decoration: none;
             border-radius: 50px;
             font-weight: bold;
-            font-size: 1.1rem;
+            font-size: 1rem;
             transition: var(--transition);
             border: none;
             cursor: pointer;
-            min-width: 200px;
+            min-width: 180px;
         }
 
         .download-btn {
-            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-            box-shadow: 0 5px 15px rgba(0, 114, 255, 0.4);
+            background: var(--primary-color);
         }
 
         .copy-btn {
-            background: linear-gradient(to right, var(--accent-color), #ff6b9d);
-            box-shadow: 0 5px 15px rgba(255, 62, 128, 0.4);
+            background: var(--accent-color);
         }
 
         .download-btn:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0, 114, 255, 0.6);
-            background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
+            background: var(--secondary-color);
         }
 
         .copy-btn:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(255, 62, 128, 0.6);
-            background: linear-gradient(to right, #ff6b9d, var(--accent-color));
+            background: #ff6b9d;
         }
 
         .code-preview {
             background-color: #1e1e2e;
             border-radius: 8px;
-            padding: 20px;
-            margin-top: 20px;
+            padding: 18px;
+            margin-top: 18px;
             text-align: left;
             overflow-x: auto;
             border: 1px solid #2a2a3a;
-            max-height: 500px;
+            max-height: 400px;
             overflow-y: auto;
         }
 
         .code-preview pre {
             color: #f0f0f0;
             font-family: 'Courier New', monospace;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             line-height: 1.5;
             margin: 0;
         }
@@ -575,17 +516,17 @@
         /* Botão voltar ao topo */
         .back-to-top {
             position: fixed;
-            bottom: 40px;
-            right: 40px;
-            width: 55px;
-            height: 55px;
-            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
             color: white;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             text-decoration: none;
             box-shadow: var(--shadow);
             opacity: 0;
@@ -602,7 +543,7 @@
         }
 
         .back-to-top:hover {
-            background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
+            background: var(--secondary-color);
             transform: translateY(-5px) scale(1.1);
             box-shadow: 0 0 25px rgba(0, 212, 255, 0.7);
         }
@@ -611,7 +552,7 @@
         footer {
             background-color: #050508;
             color: var(--gray-text);
-            padding: 60px 0 25px;
+            padding: 50px 0 20px;
             text-align: center;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
@@ -621,7 +562,7 @@
             flex-wrap: wrap;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .footer-logo {
@@ -631,16 +572,13 @@
         }
 
         .footer-logo h3 {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            color: var(--primary-color);
         }
 
         .footer-logo p {
-            font-size: 1rem;
+            font-size: 0.95rem;
             opacity: 0.8;
             max-width: 300px;
         }
@@ -653,45 +591,46 @@
 
         .footer-info h4 {
             color: var(--light-text);
-            margin-bottom: 20px;
-            font-size: 1.3rem;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
         }
 
         .footer-info p {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
         }
 
         .footer-info i {
-            margin-right: 12px;
+            margin-right: 10px;
             color: var(--primary-color);
-            width: 20px;
+            width: 18px;
         }
 
         .copyright {
-            margin-top: 30px;
+            margin-top: 25px;
             width: 100%;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             opacity: 0.7;
-            padding-top: 25px;
+            padding-top: 20px;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         /* Notificação de cópia */
         .copy-notification {
             position: fixed;
-            top: 100px;
+            top: 80px;
             right: 20px;
-            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            background: var(--primary-color);
             color: white;
-            padding: 15px 25px;
+            padding: 12px 20px;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             z-index: 1000;
             opacity: 0;
             transform: translateX(100%);
             transition: var(--transition);
+            font-size: 0.9rem;
         }
 
         .copy-notification.show {
@@ -699,25 +638,32 @@
             transform: translateX(0);
         }
 
-        /* Responsividade */
+        /* =============== RESPONSIVIDADE =============== */
+        
+        /* Tablets e dispositivos médios */
         @media (max-width: 992px) {
             .hero h2 {
-                font-size: 2.7rem;
+                font-size: 2.2rem;
             }
             
             .section-title {
-                font-size: 2.4rem;
+                font-size: 1.9rem;
             }
             
             .step-image {
-                height: 280px;
+                height: 240px;
             }
             
             .intro-image img {
-                height: 350px;
+                height: 300px;
+            }
+            
+            .component-image {
+                height: 220px;
             }
         }
 
+        /* Dispositivos móveis grandes e tablets pequenos */
         @media (max-width: 768px) {
             .menu-toggle {
                 display: block;
@@ -725,13 +671,13 @@
             
             nav ul {
                 position: fixed;
-                top: 85px;
+                top: 70px;
                 left: 0;
                 width: 100%;
                 background-color: rgba(0, 149, 255, 0.95);
                 flex-direction: column;
                 align-items: center;
-                padding: 25px 0;
+                padding: 20px 0;
                 box-shadow: var(--shadow);
                 transform: translateY(-100%);
                 opacity: 0;
@@ -746,32 +692,18 @@
             }
             
             nav li {
-                margin: 18px 0;
-            }
-            
-            .progress-container {
-                flex-wrap: wrap;
-            }
-            
-            .progress-bar {
-                order: 1;
-                width: 100%;
-                margin: 25px 0;
-            }
-            
-            .step-indicator {
-                margin: 0 12px;
+                margin: 15px 0;
             }
             
             section {
-                padding: 70px 0;
+                padding: 50px 0;
             }
             
             .hero {
-                padding: 110px 0 70px;
+                padding: 80px 0 40px;
             }
             
-            .intro-content, .components-grid, .code-container {
+            .intro-content, .code-container {
                 flex-direction: column;
             }
             
@@ -782,55 +714,151 @@
             
             .download-btn, .copy-btn {
                 width: 100%;
-                max-width: 300px;
+                max-width: 280px;
             }
-        }
-
-        @media (max-width: 576px) {
-            .hero {
-                padding: 90px 0 50px;
+            
+            /* Alinhamento de texto à esquerda no mobile */
+            .hero, .intro-text, .step-content, .component-content, .code-card, .footer-logo, .footer-info {
+                text-align: left !important;
+            }
+            
+            .hero .container {
+                text-align: center !important;
+            }
+            
+            /* Títulos com máximo de 2 linhas */
+            .hero h2, .intro-text h2, .section-title, .step-title {
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                line-height: 1.3;
             }
             
             .hero h2 {
-                font-size: 2.2rem;
-            }
-            
-            .logo h1 {
-                font-size: 1.6rem;
+                font-size: 1.9rem;
             }
             
             .section-title {
-                font-size: 2rem;
+                font-size: 1.7rem;
             }
             
             .step-title {
+                font-size: 1.4rem;
+            }
+        }
+
+        /* Dispositivos móveis pequenos */
+        @media (max-width: 576px) {
+            .hero {
+                padding: 60px 0 30px;
+            }
+            
+            .hero h2 {
+                font-size: 1.7rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .logo h1 {
+                font-size: 1.3rem;
+            }
+            
+            .logo p {
+                font-size: 0.8rem;
+            }
+            
+            .section-title {
                 font-size: 1.5rem;
             }
             
             .step-content {
-                padding: 25px;
+                padding: 20px;
+            }
+            
+            .step-number {
+                width: 45px;
+                height: 45px;
+                line-height: 45px;
+                font-size: 1.1rem;
             }
             
             .intro-image img {
-                height: 250px;
+                height: 220px;
             }
             
             .footer-logo, .footer-info {
                 min-width: 100%;
-                margin-bottom: 30px;
-                text-align: center;
+                margin-bottom: 25px;
+                text-align: center !important;
             }
             
             .code-card {
-                padding: 25px;
+                padding: 20px;
             }
             
             .code-preview {
-                padding: 15px;
+                padding: 12px;
             }
             
             .code-preview pre {
-                font-size: 0.75rem;
+                font-size: 0.7rem;
+            }
+            
+            .download-btn, .copy-btn {
+                min-width: 100%;
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Resolução específica 800x800 (projetor) */
+        @media (min-width: 800px) and (max-width: 800px) {
+            .container {
+                width: 95%;
+                max-width: 750px;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .components-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+            
+            .step-card {
+                margin-bottom: 25px;
+            }
+        }
+
+        /* Telas muito pequenas */
+        @media (max-width: 400px) {
+            .hero h2 {
+                font-size: 1.5rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .components-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .step-image {
+                height: 200px;
+            }
+            
+            .back-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+                font-size: 1.2rem;
             }
         }
     </style>
@@ -860,7 +888,7 @@
         </div>
     </header>
 
-    <!-- Seção Hero - SEM IMAGEM DE FUNDO -->
+    <!-- Seção Hero -->
     <section class="hero" id="inicio">
         <div class="container">
             <h2>Carro Arduino Desviador de Obstáculos</h2>
@@ -873,7 +901,7 @@
         <div class="container">
             <div class="intro-content">
                 <div class="intro-text">
-                    <h2>Como esse Projeto <span> Funciona</span>?</h2>
+                    <h2>Como esse Projeto <span>Funciona</span>?</h2>
                     <p>Este carro robótico utiliza um sensor ultrassônico para medir a distância de objetos à sua frente. Quando detecta um obstáculo muito próximo, ele automaticamente:</p>
                     <p><strong>1.</strong> Para os motores e dá ré por um curto período</p>
                     <p><strong>2.</strong> Usa um servo motor para girar o sensor e verificar a melhor direção</p>
@@ -882,7 +910,6 @@
                     <p>O controle principal é feito por um Arduino UNO, que processa os dados do sensor e comanda os motores através de um driver L298N.</p>
                 </div>
                 <div class="intro-image">
-                    <!-- Imagem ilustrativa que você pode substituir depois -->
                     <img src="img/carro_convertido.png" alt="Carro Arduino em funcionamento">
                 </div>
             </div>
@@ -894,15 +921,6 @@
         <div class="container">
             <h2 class="section-title">Montagem Passo a Passo</h2>
             
-            <!-- Barra de progresso -->
-            <div class="progress-container">
-                <div class="step-indicator active">1</div>
-                <div class="progress-bar">
-                    <div class="progress" id="progressBar"></div>
-                </div>
-                <div class="step-indicator">6</div>
-            </div>
-
             <!-- Container dos passos -->
             <div class="tutorial-container">
                 <!-- Passo 1 -->
@@ -968,7 +986,7 @@
         </div>
     </section>
 
-    <!-- Seção de Componentes - ATUALIZADA COM 10 COMPONENTES -->
+    <!-- Seção de Componentes -->
     <section class="components" id="componentes">
         <div class="container">
             <h2 class="section-title">Componentes Utilizados</h2>
@@ -1022,7 +1040,6 @@
                     </div>
                 </div>
                 
-                <!-- NOVOS COMPONENTES ADICIONADOS -->
                 <div class="component-card">
                     <img src="https://imgs.search.brave.com/aYyb0_7AGTPq-Tcysim7WiITMxuPZp0DZ_n6qHR2TxE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9odHRw/Mi5tbHN0YXRpYy5j/b20vRF9RX05QXzJY/XzY4MDgwNC1NTEI3/MDA5MTcxNDg4N18w/NjIwMjMtRS1jYWl4/YS1jYXNlLXN1cG9y/dGUtYmF0ZXJpYS1w/aWxoYS0yLTE4NjUw/LTc0di1hcmR1aW5v/LTJzLndlYnA" alt="Holder para Bateria" class="component-image">
                     <div class="component-content">
@@ -1317,8 +1334,6 @@
 
         // Animações ao rolar a página
         const stepCards = document.querySelectorAll('.step-card');
-        const progressBar = document.getElementById('progressBar');
-        const stepIndicators = document.querySelectorAll('.step-indicator');
         const backToTop = document.getElementById('backToTop');
 
         // Função para verificar se um elemento está visível na tela
@@ -1338,29 +1353,6 @@
             stepCards.forEach(card => {
                 if (isElementInViewport(card)) {
                     card.classList.add('visible');
-                }
-            });
-
-            // Atualizar barra de progresso
-            let totalSteps = stepCards.length;
-            let stepsInView = 0;
-            
-            stepCards.forEach((card, index) => {
-                if (isElementInViewport(card)) {
-                    stepsInView = index + 1;
-                }
-            });
-
-            // Atualizar progresso da barra
-            let progress = (stepsInView / totalSteps) * 100;
-            progressBar.style.width = `${progress}%`;
-
-            // Atualizar indicadores de passo
-            stepIndicators.forEach((indicator, index) => {
-                if (index < stepsInView) {
-                    indicator.classList.add('active');
-                } else {
-                    indicator.classList.remove('active');
                 }
             });
 
@@ -1396,7 +1388,7 @@
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
                     window.scrollTo({
-                        top: targetElement.offsetTop - 80,
+                        top: targetElement.offsetTop - 70,
                         behavior: 'smooth'
                     });
                 }
@@ -1580,23 +1572,23 @@ void turnLeft() {
   motor4.run(FORWARD);
 }`;
 
-        // Download do código
+        // Download do código (CORRIGIDO para .ino)
         document.getElementById('downloadCode').addEventListener('click', function(e) {
             e.preventDefault();
             
-            // Criar e simular download do arquivo
+            // Criar e simular download do arquivo com extensão .ino
             const blob = new Blob([arduinoCode], { type: 'text/plain' });
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'carro_robo_arduino.ino';
+            a.download = 'carro_arduino_desviador_obstaculos.ino';
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
             window.URL.revokeObjectURL(url);
             
             // Mostrar feedback
-            showNotification('Código baixado com sucesso!');
+            showNotification('Código baixado como .ino com sucesso!');
         });
 
         // Copiar código
@@ -1632,14 +1624,18 @@ void turnLeft() {
         }
 
         // Instruções no console
-        console.log("=== SITE FINALIZADO ===");
-        console.log("✅ Removidos os 3 cards de features da seção Hero");
-        console.log("✅ Removida a lista 'Este projeto é perfeito para quem está aprendendo:'");
-        console.log("✅ Mantidos todos os 10 componentes na seção de componentes");
-        console.log("✅ Site limpo e focado apenas no conteúdo principal");
+        console.log("=== SITE ATUALIZADO ===");
+        console.log("✅ Menu superior NÃO FIXO removido");
+        console.log("✅ Tamanho do menu reduzido em desktop e mobile");
+        console.log("✅ Textos com degradê substituídos por cores sólidas");
+        console.log("✅ Régua de 1 a 6 removida");
+        console.log("✅ Download do código corrigido para .ino");
+        console.log("✅ Layout totalmente responsivo implementado");
+        console.log("✅ Alinhamento à esquerda no mobile corrigido");
+        console.log("✅ Títulos limitados a 2 linhas no mobile");
+        console.log("✅ Espaçamentos otimizados para melhor leitura");
+        console.log("✅ Responsividade para 800x800 implementada");
         console.log("✅ Pronto para uso!");
     </script>
 </body>
 </html>
-
-
