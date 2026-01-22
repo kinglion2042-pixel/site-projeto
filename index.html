@@ -251,12 +251,7 @@
             border-radius: 2px;
         }
 
-        /* REMOVIDA A RÉGUA DE 1 A 6 */
-        .progress-container {
-            display: none;
-        }
-
-        /* Cards do tutorial */
+        /* Cards do tutorial - ANIMAÇÃO MAIS RÁPIDA */
         .tutorial-container {
             position: relative;
         }
@@ -267,15 +262,25 @@
             box-shadow: var(--shadow);
             margin-bottom: 40px;
             overflow: hidden;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: var(--transition);
-            border: 1px solid var(--border-color);
-        }
-
-        .step-card.visible {
             opacity: 1;
             transform: translateY(0);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            border: 1px solid var(--border-color);
+            /* INICIALMENTE VISÍVEL NO MOBILE PARA EVITAR ATRASO */
+            visibility: visible !important;
+        }
+
+        /* APENAS PARA DESKTOP - ANIMAÇÃO SUAVE */
+        @media (min-width: 769px) {
+            .step-card {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            
+            .step-card.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .step-card:hover {
@@ -746,6 +751,12 @@
             .step-title {
                 font-size: 1.4rem;
             }
+            
+            /* NO MOBILE: CARDS JÁ VISÍVEIS POR PADRÃO */
+            .step-card {
+                opacity: 1 !important;
+                transform: translateY(0) !important;
+            }
         }
 
         /* Dispositivos móveis pequenos */
@@ -1041,7 +1052,7 @@
                 </div>
                 
                 <div class="component-card">
-                    <img src="https://imgs.search.brave.com/aYyb0_7AGTPq-Tcysim7WiITMxuPZp0DZ_n6qHR2TxE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9odHRw/Mi5tbHN0YXRpYy5j/b20vRF9RX05QXzJY/XzY4MDgwNC1NTEI3/MDA5MTcxNDg4N18w/NjIwMjMtRS1jYWl4/YS1jYXNlLXN1cG9y/dGUtYmF0ZXJpYS1w/aWxoYS0yLTE4NjUw/LTc0di1hcmR1aW5v/LTJzLndlYnA" alt="Holder para Bateria" class="component-image">
+                    <img src="https://imgs.search.brave.com/aYyb0_7AGTPq-Tcysim7WiITMxuPZp0DZ_n6qHR2TxE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9odHRw/Mi5tbHN0YXRpYy5j/b20vRF9RX05PXzJY/XzY4MDgwNC1NTEI3/MDA5MTcxNDg4N18w/NjIwMjMtRS1jYWl4/YS1jYXNlLXN1cG9y/dGUtYmF0ZXJpYS1w/aWxoYS0yLTE4NjUw/LTc0di1hcmR1aW5v/LTJzLndlYnA" alt="Holder para Bateria" class="component-image">
                     <div class="component-content">
                         <h3>Holder para Bateria</h3>
                         <p>Suporte para fixar a bateria Li-Ion na estrutura do carro robô.</p>
@@ -1332,29 +1343,36 @@
             });
         });
 
-        // Animações ao rolar a página
+        // Animações ao rolar a página - OTIMIZADO PARA MOBILE
         const stepCards = document.querySelectorAll('.step-card');
         const backToTop = document.getElementById('backToTop');
 
-        // Função para verificar se um elemento está visível na tela
+        // Verificar se é dispositivo móvel
+        const isMobile = window.innerWidth <= 768;
+        
+        // NOVO: Função otimizada para verificar visibilidade
         function isElementInViewport(el) {
             const rect = el.getBoundingClientRect();
+            const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+            
+            // AUMENTADO O LIMITE: 80% da janela visível (era 20%)
             return (
-                rect.top >= 0 &&
-                rect.left >= 0 &&
-                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) * 1.2 &&
-                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+                rect.top <= windowHeight * 0.8 &&
+                rect.bottom >= 0
             );
         }
 
-        // Função para atualizar animações e progresso
+        // NOVO: Função otimizada para atualizar animações
         function updateOnScroll() {
-            // Animar cards ao rolar
-            stepCards.forEach(card => {
-                if (isElementInViewport(card)) {
-                    card.classList.add('visible');
-                }
-            });
+            // Se for mobile, os cards já estão visíveis por padrão
+            if (!isMobile) {
+                // Animar cards ao rolar - COM MAIOR SENSIBILIDADE
+                stepCards.forEach(card => {
+                    if (isElementInViewport(card)) {
+                        card.classList.add('visible');
+                    }
+                });
+            }
 
             // Mostrar/ocultar botão voltar ao topo
             if (window.scrollY > 300) {
@@ -1364,16 +1382,39 @@
             }
         }
 
-        // Adicionar evento de scroll
-        window.addEventListener('scroll', updateOnScroll);
+        // NOVO: Debounce para otimizar performance
+        let scrollTimeout;
+        function handleScroll() {
+            if (scrollTimeout) {
+                window.cancelAnimationFrame(scrollTimeout);
+            }
+            scrollTimeout = window.requestAnimationFrame(updateOnScroll);
+        }
+
+        // Adicionar evento de scroll otimizado
+        window.addEventListener('scroll', handleScroll, { passive: true });
 
         // Inicializar animações na carga da página
         window.addEventListener('load', () => {
-            updateOnScroll();
+            // NO MOBILE: Todos os cards já estão visíveis
+            // NO DESKTOP: Verificar os visíveis
+            if (!isMobile) {
+                updateOnScroll();
+            }
             
-            // Animar primeiro card se estiver visível
-            if (stepCards.length > 0 && isElementInViewport(stepCards[0])) {
-                stepCards[0].classList.add('visible');
+            // Sempre mostrar botão se necessário
+            if (window.scrollY > 300) {
+                backToTop.classList.add('visible');
+            }
+        });
+
+        // NOVO: Redimensionamento da janela
+        window.addEventListener('resize', () => {
+            // Recalcular se é mobile após redimensionamento
+            const newIsMobile = window.innerWidth <= 768;
+            if (newIsMobile !== isMobile) {
+                // Recarregar comportamento
+                window.location.reload();
             }
         });
 
@@ -1624,7 +1665,7 @@ void turnLeft() {
         }
 
         // Instruções no console
-        console.log("=== SITE ATUALIZADO ===");
+        console.log("=== SITE ATUALIZADO COM ANIMAÇÕES OTIMIZADAS ===");
         console.log("✅ Menu superior NÃO FIXO removido");
         console.log("✅ Tamanho do menu reduzido em desktop e mobile");
         console.log("✅ Textos com degradê substituídos por cores sólidas");
@@ -1633,6 +1674,9 @@ void turnLeft() {
         console.log("✅ Layout totalmente responsivo implementado");
         console.log("✅ Alinhamento à esquerda no mobile corrigido");
         console.log("✅ Títulos limitados a 2 linhas no mobile");
+        console.log("✅ ANIMAÇÕES OTIMIZADAS: Cards visíveis instantaneamente no mobile");
+        console.log("✅ ANIMAÇÕES OTIMIZADAS: Trigger aumentado para 80% da janela");
+        console.log("✅ ANIMAÇÕES OTIMIZADAS: Performance otimizada com requestAnimationFrame");
         console.log("✅ Espaçamentos otimizados para melhor leitura");
         console.log("✅ Responsividade para 800x800 implementada");
         console.log("✅ Pronto para uso!");
