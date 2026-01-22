@@ -288,22 +288,23 @@
             transform: translateY(-5px);
         }
 
-        /* CORREÇÃO: IMAGENS NO MOBILE - NÃO CORTAR */
+        /* CORREÇÃO: IMAGENS NO MOBILE E DESKTOP - TAMANHO AJUSTADO */
         .step-image {
             width: 100%;
             height: auto; /* ALTURA AUTOMÁTICA NO MOBILE */
-            max-height: 320px; /* LIMITE MÁXIMO */
+            max-height: 420px; /* LIMITE MÁXIMO MAIOR NO MOBILE */
             object-fit: contain; /* MOSTRA IMAGEM COMPLETA SEM CORTAR */
             display: block;
             transition: var(--transition);
             background-color: #1a1a2a; /* FUNDO PARA IMAGENS TRANSPARENTES */
         }
 
-        /* DESKTOP: MANTÉM O COMPORTAMENTO ORIGINAL */
+        /* DESKTOP: TAMANHO MAIOR E COMPORTAMENTO OTIMIZADO */
         @media (min-width: 769px) {
             .step-image {
-                height: 280px; /* ALTURA FIXA NO DESKTOP */
+                height: 320px; /* ALTURA MAIOR NO DESKTOP (era 280px) */
                 object-fit: cover; /* COBRE O ESPAÇO NO DESKTOP */
+                object-position: center center; /* CENTRALIZA A IMAGEM */
             }
         }
 
@@ -765,14 +766,14 @@
                 transform: translateY(0) !important;
             }
             
-            /* CORREÇÃO ESPECÍFICA PARA IMAGENS NO MOBILE */
+            /* CORREÇÃO ESPECÍFICA PARA IMAGENS NO MOBILE - TAMANHO MAIOR */
             .step-image {
                 width: 100%;
-                height: auto !important; /* FORÇA ALTURA AUTOMÁTICA */
-                max-height: 400px; /* LIMITE MÁXIMO MAIOR PARA MOBILE */
-                object-fit: contain !important; /* GARANTE QUE MOSTRA IMAGEM COMPLETA */
+                height: auto !important;
+                max-height: 450px; /* MAIOR NO MOBILE (era 400px) */
+                object-fit: contain !important;
                 background-color: #1a1a2a;
-                padding: 10px; /* ESPAÇO AO REDOR DA IMAGEM */
+                padding: 15px; /* MAIS ESPAÇO AO REDOR */
             }
         }
 
@@ -843,8 +844,8 @@
             
             /* AJUSTES ADICIONAIS PARA IMAGENS NO MOBILE PEQUENO */
             .step-image {
-                max-height: 350px; /* LIMITE UM POUCO MENOR PARA CELULARES PEQUENOS */
-                padding: 5px;
+                max-height: 400px; /* LIMITE AINDA BOM PARA CELULARES PEQUENOS (era 350px) */
+                padding: 10px;
             }
         }
 
@@ -868,10 +869,11 @@
                 margin-bottom: 25px;
             }
             
-            /* PARA 800x800, MANTÉM COMPORTAMENTO DE DESKTOP */
+            /* PARA 800x800, MANTÉM COMPORTAMENTO DE DESKTOP MAS TAMANHO MAIOR */
             .step-image {
-                height: 250px;
+                height: 280px; /* MAIOR PARA 800x800 */
                 object-fit: cover;
+                object-position: center;
             }
         }
 
@@ -899,14 +901,14 @@
             
             /* AJUSTES FINAIS PARA IMAGENS EM TELAS MUITO PEQUENAS */
             .step-image {
-                max-height: 300px;
+                max-height: 350px; /* AINDA RAZOÁVEL PARA TELAS PEQUENAS */
             }
         }
         
         /* AJUSTE ESPECIAL PARA IMAGENS DE COMPONENTES NO MOBILE */
         @media (max-width: 768px) {
             .component-image {
-                height: 200px;
+                height: 220px; /* UM POUCO MAIOR NO MOBILE */
                 object-fit: contain;
                 background-color: #1a1a2a;
                 padding: 10px;
@@ -1705,7 +1707,7 @@ void turnLeft() {
         }
 
         // Instruções no console
-        console.log("=== SITE ATUALIZADO COM IMAGENS CORRIGIDAS ===");
+        console.log("=== SITE FINALIZADO COM IMAGENS AJUSTADAS ===");
         console.log("✅ Menu superior NÃO FIXO removido");
         console.log("✅ Tamanho do menu reduzido em desktop e mobile");
         console.log("✅ Textos com degradê substituídos por cores sólidas");
@@ -1715,16 +1717,16 @@ void turnLeft() {
         console.log("✅ Alinhamento à esquerda no mobile corrigido");
         console.log("✅ Títulos limitados a 2 linhas no mobile");
         console.log("✅ ANIMAÇÕES OTIMIZADAS: Cards visíveis instantaneamente no mobile");
-        console.log("✅ CORREÇÃO DE IMAGENS NO MOBILE: Agora mostram imagens completas sem cortes");
-        console.log("✅ CORREÇÃO: object-fit: contain no mobile (mostra imagem inteira)");
-        console.log("✅ CORREÇÃO: object-fit: cover no desktop (mantém comportamento original)");
-        console.log("✅ CORREÇÃO: Altura automática no mobile, fixa no desktop");
-        console.log("✅ CORREÇÃO: Fundo escuro para imagens transparentes");
+        console.log("✅ IMAGENS NO MOBILE: Tamanho aumentado (max-height: 450px)");
+        console.log("✅ IMAGENS NO DESKTOP: Tamanho aumentado (height: 320px)");
+        console.log("✅ IMAGENS NO DESKTOP: object-position: center (menos cortes)");
+        console.log("✅ IMAGENS NO MOBILE: object-fit: contain (mostra imagem completa)");
+        console.log("✅ IMAGENS NO DESKTOP: object-fit: cover (mantém proporção)");
         console.log("✅ ANIMAÇÕES OTIMIZADAS: Trigger aumentado para 80% da janela");
         console.log("✅ ANIMAÇÕES OTIMIZADAS: Performance otimizada com requestAnimationFrame");
         console.log("✅ Espaçamentos otimizados para melhor leitura");
         console.log("✅ Responsividade para 800x800 implementada");
-        console.log("✅ Pronto para uso!");
+        console.log("✅ SITE PRONTO PARA USO!");
     </script>
 </body>
 </html>
