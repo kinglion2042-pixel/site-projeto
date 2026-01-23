@@ -349,18 +349,39 @@
             font-size: 1rem;
         }
 
-        /* Seção de componentes */
+        /* ========== SEÇÃO DE COMPONENTES ATUALIZADA ========== */
         .components {
             background-color: var(--darker-bg);
         }
 
-        .components-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 25px;
-            margin-top: 40px;
+        .components-header {
+            text-align: center;
+            margin-bottom: 40px;
         }
 
+        .components-subtitle {
+            color: var(--gray-text);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        /* NOVO: CONTAINER DE GRADE RESPONSIVA */
+        .components-grid-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* GRID PRINCIPAL PARA DESKTOP */
+        .components-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr); /* 5 colunas no desktop */
+            gap: 20px; /* Espaçamento reduzido */
+            margin-top: 30px;
+            transition: var(--transition);
+        }
+
+        /* CARDS DE COMPONENTES REDUZIDOS */
         .component-card {
             background-color: var(--card-bg);
             border-radius: var(--border-radius);
@@ -369,35 +390,220 @@
             border: 1px solid var(--border-color);
             box-shadow: var(--shadow);
             text-align: center;
+            height: 100%; /* Altura uniforme */
+            display: flex;
+            flex-direction: column;
         }
 
         .component-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            transform: translateY(-5px); /* Elevação reduzida */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
             border-color: var(--primary-color);
         }
 
+        /* IMAGENS DOS COMPONENTES REDUZIDAS */
         .component-image {
             width: 100%;
-            height: 250px;
+            height: 160px; /* Altura reduzida */
             object-fit: cover;
             display: block;
+            border-bottom: 1px solid var(--border-color);
         }
 
+        /* CONTEÚDO DOS CARDS REDUZIDO */
         .component-content {
-            padding: 20px;
+            padding: 15px; /* Padding reduzido */
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .component-card h3 {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
+            font-size: 1rem; /* Fonte reduzida */
+            margin-bottom: 8px;
             color: var(--light-text);
+            line-height: 1.3;
+            min-height: 2.6em; /* Altura fixa para título */
         }
 
         .component-card p {
             color: var(--gray-text);
-            font-size: 0.95rem;
-            line-height: 1.6;
+            font-size: 0.85rem; /* Fonte reduzida */
+            line-height: 1.5;
+            margin-bottom: 10px;
+            flex-grow: 1; /* Ocupa espaço restante */
+        }
+
+        /* NOVO: CONTROLES DE NAVEGAÇÃO PARA MOBILE */
+        .components-nav {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            margin-top: 25px;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .nav-btn:hover {
+            background: var(--secondary-color);
+            transform: scale(1.1);
+        }
+
+        .nav-btn.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .page-indicators {
+            display: flex;
+            gap: 8px;
+        }
+
+        .page-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--gray-text);
+            opacity: 0.5;
+            transition: var(--transition);
+        }
+
+        .page-indicator.active {
+            background-color: var(--primary-color);
+            opacity: 1;
+            transform: scale(1.2);
+        }
+
+        /* ========== RESPONSIVIDADE DA GRADE ========== */
+
+        /* TABLETS - 4 colunas */
+        @media (max-width: 992px) {
+            .components-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 18px;
+            }
+            
+            .component-image {
+                height: 150px;
+            }
+        }
+
+        /* TABLETS PEQUENOS - 3 colunas */
+        @media (max-width: 768px) {
+            .components-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 16px;
+            }
+            
+            .component-image {
+                height: 140px;
+            }
+        }
+
+        /* MOBILE - 2 COLUNAS COM SCROLL HORIZONTAL */
+        @media (max-width: 576px) {
+            .components-grid-container {
+                overflow-x: auto;
+                overflow-y: hidden;
+                padding-bottom: 10px;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none; /* Firefox */
+            }
+            
+            .components-grid-container::-webkit-scrollbar {
+                display: none; /* Chrome, Safari, Edge */
+            }
+            
+            .components-grid {
+                grid-template-columns: repeat(10, 280px); /* Grid horizontal */
+                gap: 15px;
+                display: flex; /* Muda para flex para scroll horizontal */
+                flex-wrap: nowrap;
+                padding: 5px;
+                margin-top: 20px;
+            }
+            
+            .component-card {
+                width: 280px; /* Largura fixa para cards no mobile */
+                flex-shrink: 0; /* Impede que os cards encolham */
+                height: 350px; /* Altura fixa para uniformidade */
+            }
+            
+            .component-image {
+                height: 160px;
+            }
+            
+            .component-content {
+                padding: 12px;
+            }
+            
+            .component-card h3 {
+                font-size: 1.1rem;
+                min-height: 2.8em;
+            }
+            
+            .component-card p {
+                font-size: 0.9rem;
+            }
+            
+            /* MOSTRA CONTROLES DE NAVEGAÇÃO NO MOBILE */
+            .components-nav {
+                display: flex;
+            }
+        }
+
+        /* MOBILE MUITO PEQUENO */
+        @media (max-width: 400px) {
+            .components-grid {
+                grid-template-columns: repeat(10, 260px);
+                gap: 12px;
+            }
+            
+            .component-card {
+                width: 260px;
+                height: 340px;
+            }
+            
+            .component-image {
+                height: 150px;
+            }
+        }
+
+        /* RESOLUÇÃO ESPECÍFICA 800x800 */
+        @media (min-width: 800px) and (max-width: 800px) {
+            .components-grid {
+                grid-template-columns: repeat(4, 1fr); /* 4 colunas para 800px */
+                gap: 15px;
+            }
+            
+            .component-card {
+                height: 330px;
+            }
+            
+            .component-image {
+                height: 140px;
+            }
+        }
+
+        /* DESKTOP GRANDE - 5 colunas */
+        @media (min-width: 1200px) {
+            .components-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
         }
 
         /* Seção de códigos */
@@ -655,7 +861,7 @@
             transform: translateX(0);
         }
 
-        /* =============== RESPONSIVIDADE =============== */
+        /* =============== RESPONSIVIDADE GERAL =============== */
         
         /* Tablets e dispositivos médios */
         @media (max-width: 992px) {
@@ -669,10 +875,6 @@
             
             .intro-image img {
                 height: 300px;
-            }
-            
-            .component-image {
-                height: 220px;
             }
         }
 
@@ -849,34 +1051,6 @@
             }
         }
 
-        /* Resolução específica 800x800 (projetor) */
-        @media (min-width: 800px) and (max-width: 800px) {
-            .container {
-                width: 95%;
-                max-width: 750px;
-            }
-            
-            .hero h2 {
-                font-size: 2rem;
-            }
-            
-            .components-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 20px;
-            }
-            
-            .step-card {
-                margin-bottom: 25px;
-            }
-            
-            /* PARA 800x800, MANTÉM COMPORTAMENTO DE DESKTOP MAS TAMANHO MAIOR */
-            .step-image {
-                height: 280px; /* MAIOR PARA 800x800 */
-                object-fit: cover;
-                object-position: center;
-            }
-        }
-
         /* Telas muito pequenas */
         @media (max-width: 400px) {
             .hero h2 {
@@ -885,10 +1059,6 @@
             
             .hero p {
                 font-size: 1rem;
-            }
-            
-            .components-grid {
-                grid-template-columns: 1fr;
             }
             
             .back-to-top {
@@ -902,16 +1072,6 @@
             /* AJUSTES FINAIS PARA IMAGENS EM TELAS MUITO PEQUENAS */
             .step-image {
                 max-height: 350px; /* AINDA RAZOÁVEL PARA TELAS PEQUENAS */
-            }
-        }
-        
-        /* AJUSTE ESPECIAL PARA IMAGENS DE COMPONENTES NO MOBILE */
-        @media (max-width: 768px) {
-            .component-image {
-                height: 220px; /* UM POUCO MAIOR NO MOBILE */
-                object-fit: contain;
-                background-color: #1a1a2a;
-                padding: 10px;
             }
         }
     </style>
@@ -1039,91 +1199,142 @@
         </div>
     </section>
 
-    <!-- Seção de Componentes -->
+    <!-- Seção de Componentes ATUALIZADA -->
     <section class="components" id="componentes">
         <div class="container">
-            <h2 class="section-title">Componentes Utilizados</h2>
+            <h2 class="section-title">Lista de Materiais</h2>
             
-            <div class="components-grid">
-                <div class="component-card">
-                    <img src="https://imgs.search.brave.com/r9A_CZgWT4MFpPNxAeaGTU3YuelckKR4vZDwzLEpEAM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMudGNkbi5jb20u/YnIvaW1nL2ltZ19w/cm9kLzY3MjQ4Ni8x/ODBfcGxhY2FfdW5v/X3IzX2F0bWVnYTMy/OF9jb21fY2Fib191/c2JfY29tcGF0aXZl/bF9jb21fYXJkdWlu/b18zXzJfY2FiYzAy/N2NkMWJkMzM0OTZh/ZDUxNGNmNjQ3ZWY1/ODJfMjAyNDExMjgx/MDM5MDQuanBn" alt="Arduino UNO" class="component-image">
-                    <div class="component-content">
-                        <h3>Arduino UNO</h3>
-                        <p>Microcontrolador principal que processa os dados do sensor e controla os motores.</p>
+            <div class="components-header">
+                <p class="components-subtitle">Todos os componentes necessários para montar seu carro Arduino. Clique nos cards para mais detalhes.</p>
+            </div>
+            
+            <div class="components-grid-container" id="componentsContainer">
+                <div class="components-grid" id="componentsGrid">
+                    <div class="component-card">
+                        <img src="https://imgs.search.brave.com/r9A_CZgWT4MFpPNxAeaGTU3YuelckKR4vZDwzLEpEAM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMudGNkbi5jb20u/YnIvaW1nL2ltZ19w/cm9kLzY3MjQ4Ni8x/ODBfcGxhY2FfdW5v/X3IzX2F0bWVnYTMy/OF9jb21fY2Fib191/c2JfY29tcGF0aXZl/bF9jb21fYXJkdWlu/b18zXzJfY2FiYzAy/N2NkMWJkMzM0OTZh/ZDUxNGNmNjQ3ZWY1/ODJfMjAyNDExMjgx/MDM5MDQuanBn" alt="Arduino UNO" class="component-image">
+                        <div class="component-content">
+                            <h3>Arduino UNO</h3>
+                            <p>Microcontrolador principal que processa os dados do sensor e controla os motores.</p>
+                            <div class="component-meta">
+                                <small>Qtd: 1 unidade</small>
+                            </div>
+                        </div>
                     </div>
+                    
+                    <div class="component-card">
+                        <img src="https://imgs.search.brave.com/XcSDvIsn4mvC9PVQZLruUVtnyY95bj8QBSEAInmrpOc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9odHRw/Mi5tbHN0YXRpYy5j/b20vRF9RX05QXzJY/XzkzOTIwNS1NTEE5/NTc0MTMxOTA5Nl8x/MDIwMjUtRS53ZWJw" alt="Sensor Ultrassônico HC-SR04" class="component-image">
+                        <div class="component-content">
+                            <h3>Sensor Ultrassônico HC-SR04</h3>
+                            <p>Detecta obstáculos medindo a distância através de ondas sonoras.</p>
+                            <div class="component-meta">
+                                <small>Qtd: 1 unidade</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="component-card">
+                        <img src="https://imgs.search.brave.com/90e2hWwS1aM4mnNYwhC-3L6VO1Itm-2II7zBLY2K63w/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9odHRw/Mi5tbHN0YXRpYy5j/b20vRF9RX05QXzJY/XzcyNjgzMS1NTEI0/MzQ2MDM4OTE5Nl8w/OTIwMjAtRS53ZWJw" alt="Servo Motor SG90" class="component-image">
+                        <div class="component-content">
+                            <h3>Servo Motor SG90</h3>
+                            <p>Controla a direção do sensor ultrassônico para verificar obstáculos laterais.</p>
+                            <div class="component-meta">
+                                <small>Qtd: 1 unidade</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="component-card">
+                        <img src="https://imgs.search.brave.com/vEB6iEknFqNCRtuQvQzHiToYrhq3sTF5tM6ukYdVmPw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9odHRw/Mi5tbHN0YXRpYy5j/b20vRF9RX05QXzJY/XzkwNzAyNy1NTEE4/Mjk2NjUzNzMxMV8w/MzIwMjUtRS53ZWJw" alt="Motor Shield L293D" class="component-image">
+                        <div class="component-content">
+                            <h3>Motor Shield L293D</h3>
+                            <p>Controla a velocidade e direção dos dois motores DC do carro.</p>
+                            <div class="component-meta">
+                                <small>Qtd: 1 unidade</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="component-card">
+                        <img src="https://imgs.search.brave.com/AGNByciMEi793Wjb9p78DBrAAa9sweOq09MOvPp6mms/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMudGNkbi5jb20u/YnIvaW1nL2ltZ19w/cm9kLzY1MDM2MS9y/b2RhX2NvbV9wbmV1/X21vdG9yX2RjXzNf/YV82dl9jb21fcmVk/dWNhb18xNjkxXzhf/YjBjZGFiYzBjYTA4/ZTY4YjUwNWFjNzM5/OTVlNjc0OTEuanBn" alt="Motores DC" class="component-image">
+                        <div class="component-content">
+                            <h3>Motores DC</h3>
+                            <p>Fornecem a tração para o carro se mover para frente, trás e fazer curvas.</p>
+                            <div class="component-meta">
+                                <small>Qtd: 2 unidades</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="component-card">
+                        <img src="https://imgs.search.brave.com/tOS4Ev9s-MaSDPp1Y1qfJAVWUy8kS-xSCKlhUAGKhzY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMudGNkbi5jb20u/YnIvaW1nL2ltZ19w/cm9kLzY3MjQ4Ni9i/YXRlcmlhX2xpX2lv/bl9pY3IxODY1MF8y/MjAwbWFoXzNfN3Zf/MjMyM18zX2JlYmRh/ZGQyY2U1ODRiMjdh/ZWVlNTFjYzVhZGE3/YWQzXzIwMjQxMTI4/MTAzOTE3LmpwZw" alt="Bateria Li-Ion" class="component-image">
+                        <div class="component-content">
+                            <h3>Bateria Li-Ion 2200mAh 3,7V</h3>
+                            <p>Fonte de energia para todo o sistema (Arduino, motores e sensores).</p>
+                            <div class="component-meta">
+                                <small>Qtd: 1 unidade</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="component-card">
+                        <img src="https://imgs.search.brave.com/aYyb0_7AGTPq-Tcysim7WiITMxuPZp0DZ_n6qHR2TxE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9odHRw/Mi5tbHN0YXRpYy5j/b20vRF9RX05PXzJY/XzY4MDgwNC1NTEI3/MDA5MTcxNDg4N18w/NjIwMjMtRS1jYWl4/YS1jYXNlLXN1cG9y/dGUtYmF0ZXJpYS1w/aWxoYS0yLTE4NjUw/LTc0di1hcmR1aW5v/LTJzLndlYnA" alt="Holder para Bateria" class="component-image">
+                        <div class="component-content">
+                            <h3>Holder para Bateria</h3>
+                            <p>Suporte para fixar a bateria Li-Ion na estrutura do carro robô.</p>
+                            <div class="component-meta">
+                                <small>Qtd: 1 unidade</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="component-card">
+                        <img src="https://imgs.search.brave.com/dpksBIi8KuAnXVC9NguN6cHgjWXFjEk2H_lJgk5J6tA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/dGFsb3NlbGVjdHJv/bmljcy5jb20vY2Ru/L3Nob3AvcHJvZHVj/dHMvc29wb3J0ZV9w/YXJhX3NlbnNvcl91/bHRyYXNvbmljb19t/ZXhpY29famFsaXNj/b19ndWFkYWxhamFy/YV80NTZmMThiNi0w/Mjg1LTQ3OWQtOWI2/MS1hOTg5YThmNTNi/OGFfNzAweDcwMC5K/UEc_dj0xNTkzODE3/OTg5" alt="Holder para Sensor" class="component-image">
+                        <div class="component-content">
+                            <h3>Holder para Sensor</h3>
+                            <p>Suporte para fixar o sensor ultrassônico HC-SR04 no servo motor.</p>
+                            <div class="component-meta">
+                                <small>Qtd: 1 unidade</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="component-card">
+                        <img src="https://imgs.search.brave.com/fQ2Y5Fc7a2Uf1MbdWoP-VgyiwmiSitN9gYvLJ1Wb0hY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/YXdzbGkuY29tLmJy/LzYwMHg3MDAvNDY4/LzQ2ODE2Mi9wcm9k/dXRvLzE5NDE0MzE4/ZjI1NjRjNmZiZi5q/cGc" alt="Rodas para Robô" class="component-image">
+                        <div class="component-content">
+                            <h3>Rodas para Robô</h3>
+                            <p>Rodas de borracha com diâmetro de 65mm para tração do carro.</p>
+                            <div class="component-meta">
+                                <small>Qtd: 2 unidades</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="component-card">
+                        <img src="https://imgs.search.brave.com/Tntog9Oh1RXt-GndocyCGPwIxcV1SiqqLo0ID0Tz81M/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/YXdzbGkuY29tLmJy/LzQwMHg0MDAvNzgv/NzgxNTAvcHJvZHV0/by8yOTgzNzU3MS83/ZWU4YWVlZWRkLmpw/Zw" alt="Cabos Dupont Jumper" class="component-image">
+                        <div class="component-content">
+                            <h3>Cabos Dupont Jumper</h3>
+                            <p>Conexões para ligar todos os componentes entre si e ao Arduino.</p>
+                            <div class="component-meta">
+                                <small>Qtd: 20 unidades</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Controles de navegação para mobile -->
+            <div class="components-nav">
+                <button class="nav-btn" id="prevBtn" aria-label="Componentes anteriores">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                
+                <div class="page-indicators" id="pageIndicators">
+                    <!-- Indicadores serão gerados dinamicamente via JavaScript -->
                 </div>
                 
-                <div class="component-card">
-                    <img src="https://imgs.search.brave.com/XcSDvIsn4mvC9PVQZLruUVtnyY95bj8QBSEAInmrpOc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9odHRw/Mi5tbHN0YXRpYy5j/b20vRF9RX05QXzJY/XzkzOTIwNS1NTEE5/NTc0MTMxOTA5Nl8x/MDIwMjUtRS53ZWJw" alt="Sensor Ultrassônico HC-SR04" class="component-image">
-                    <div class="component-content">
-                        <h3>Sensor Ultrassônico HC-SR04</h3>
-                        <p>Detecta obstáculos medindo a distância através de ondas sonoras.</p>
-                    </div>
-                </div>
-                
-                <div class="component-card">
-                    <img src="https://imgs.search.brave.com/90e2hWwS1aM4mnNYwhC-3L6VO1Itm-2II7zBLY2K63w/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9odHRw/Mi5tbHN0YXRpYy5j/b20vRF9RX05QXzJY/XzcyNjgzMS1NTEI0/MzQ2MDM4OTE5Nl8w/OTIwMjAtRS53ZWJw" alt="Servo Motor SG90" class="component-image">
-                    <div class="component-content">
-                        <h3>Servo Motor SG90</h3>
-                        <p>Controla a direção do sensor ultrassônico para verificar obstáculos laterais.</p>
-                    </div>
-                </div>
-                
-                <div class="component-card">
-                    <img src="https://imgs.search.brave.com/vEB6iEknFqNCRtuQvQzHiToYrhq3sTF5tM6ukYdVmPw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9odHRw/Mi5tbHN0YXRpYy5j/b20vRF9RX05QXzJY/XzkwNzAyNy1NTEE4/Mjk2NjUzNzMxMV8w/MzIwMjUtRS53ZWJw" alt="Driver de Motor L298N" class="component-image">
-                    <div class="component-content">
-                        <h3>Motor Shield L293D</h3>
-                        <p>Controla a velocidade e direção dos dois motores DC do carro.</p>
-                    </div>
-                </div>
-                
-                <div class="component-card">
-                    <img src="https://imgs.search.brave.com/AGNByciMEi793Wjb9p78DBrAAa9sweOq09MOvPp6mms/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMudGNkbi5jb20u/YnIvaW1nL2ltZ19w/cm9kLzY1MDM2MS9y/b2RhX2NvbV9wbmV1/X21vdG9yX2RjXzNf/YV82dl9jb21fcmVk/dWNhb18xNjkxXzhf/YjBjZGFiYzBjYTA4/ZTY4YjUwNWFjNzM5/OTVlNjc0OTEuanBn" alt="Motores DC" class="component-image">
-                    <div class="component-content">
-                        <h3>Motores DC (x2)</h3>
-                        <p>Fornecem a tração para o carro se mover para frente, trás e fazer curvas.</p>
-                    </div>
-                </div>
-                
-                <div class="component-card">
-                    <img src="https://imgs.search.brave.com/tOS4Ev9s-MaSDPp1Y1qfJAVWUy8kS-xSCKlhUAGKhzY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMudGNkbi5jb20u/YnIvaW1nL2ltZ19w/cm9kLzY3MjQ4Ni9i/YXRlcmlhX2xpX2lv/bl9pY3IxODY1MF8y/MjAwbWFoXzNfN3Zf/MjMyM18zX2JlYmRh/ZGQyY2U1ODRiMjdh/ZWVlNTFjYzVhZGE3/YWQzXzIwMjQxMTI4/MTAzOTE3LmpwZw" alt="Bateria Li-Ion" class="component-image">
-                    <div class="component-content">
-                        <h3>Bateria Li-Ion 2200mAh 3,7V</h3>
-                        <p>Fonte de energia para todo o sistema (Arduino, motores e sensores).</p>
-                    </div>
-                </div>
-                
-                <div class="component-card">
-                    <img src="https://imgs.search.brave.com/XAptAiAx7Lcq2TTySJ1BAq1H0zPy_hbPUg_V7OafS7A/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9odHRw/Mi5tbHN0YXRpYy5j/b20vRF9RX05QXzJY/XzYwMjcyNy1NTEI3/MTU0OTgxMTA2OV8w/OTIwMjMtRS53ZWJw" alt="Holder para Bateria" class="component-image">
-                    <div class="component-content">
-                        <h3>Holder para Bateria</h3>
-                        <p>Suporte para fixar a bateria Li-Ion na estrutura do carro robô.</p>
-                    </div>
-                </div>
-                
-                <div class="component-card">
-                    <img src="https://imgs.search.brave.com/dpksBIi8KuAnXVC9NguN6cHgjWXFjEk2H_lJgk5J6tA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/dGFsb3NlbGVjdHJv/bmljcy5jb20vY2Ru/L3Nob3AvcHJvZHVj/dHMvc29wb3J0ZV9w/YXJhX3NlbnNvcl91/bHRyYXNvbmljb19t/ZXhpY29famFsaXNj/b19ndWFkYWxhamFy/YV80NTZmMThiNi0w/Mjg1LTQ3OWQtOWI2/MS1hOTg5YThmNTNi/OGFfNzAweDcwMC5K/UEc_dj0xNTkzODE3/OTg5" alt="Holder para Sensor" class="component-image">
-                    <div class="component-content">
-                        <h3>Holder para Sensor</h3>
-                        <p>Suporte para fixar o sensor ultrassônico HC-SR04 no servo motor.</p>
-                    </div>
-                </div>
-                
-                <div class="component-card">
-                    <img src="https://imgs.search.brave.com/fQ2Y5Fc7a2Uf1MbdWoP-VgyiwmiSitN9gYvLJ1Wb0hY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/YXdzbGkuY29tLmJy/LzYwMHg3MDAvNDY4/LzQ2ODE2Mi9wcm9k/dXRvLzE5NDE0MzE4/ZjI1NjRjNmZiZi5q/cGc" alt="Rodas para Robô" class="component-image">
-                    <div class="component-content">
-                        <h3>Rodas para Robô (x2)</h3>
-                        <p>Rodas de borracha com diâmetro de 65mm para tração do carro.</p>
-                    </div>
-                </div>
-                
-                <div class="component-card">
-                    <img src="https://imgs.search.brave.com/Tntog9Oh1RXt-GndocyCGPwIxcV1SiqqLo0ID0Tz81M/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/YXdzbGkuY29tLmJy/LzQwMHg0MDAvNzgv/NzgxNTAvcHJvZHV0/by8yOTgzNzU3MS83/ZWU4YWVlZWRkLmpw/Zw" alt="Jumpers e Cabos" class="component-image">
-                    <div class="component-content">
-                        <h3>Cabos Dupont Jumper</h3>
-                        <p>Conexões para ligar todos os componentes entre si e ao Arduino.</p>
-                    </div>
-                </div>
+                <button class="nav-btn" id="nextBtn" aria-label="Próximos componentes">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
             </div>
         </div>
     </section>
@@ -1392,7 +1603,7 @@
         // Verificar se é dispositivo móvel
         const isMobile = window.innerWidth <= 768;
         
-        // NOVO: Função otimizada para verificar visibilidade
+        // Função otimizada para verificar visibilidade
         function isElementInViewport(el) {
             const rect = el.getBoundingClientRect();
             const windowHeight = window.innerHeight || document.documentElement.clientHeight;
@@ -1404,7 +1615,7 @@
             );
         }
 
-        // NOVO: Função otimizada para atualizar animações
+        // Função otimizada para atualizar animações
         function updateOnScroll() {
             // Se for mobile, os cards já estão visíveis por padrão
             if (!isMobile) {
@@ -1424,7 +1635,7 @@
             }
         }
 
-        // NOVO: Debounce para otimizar performance
+        // Debounce para otimizar performance
         let scrollTimeout;
         function handleScroll() {
             if (scrollTimeout) {
@@ -1436,7 +1647,122 @@
         // Adicionar evento de scroll otimizado
         window.addEventListener('scroll', handleScroll, { passive: true });
 
-        // Inicializar animações na carga da página
+        // ============ NAVEGAÇÃO DOS COMPONENTES ============
+        const componentsContainer = document.getElementById('componentsContainer');
+        const componentsGrid = document.getElementById('componentsGrid');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const pageIndicators = document.getElementById('pageIndicators');
+
+        let currentPage = 0;
+        let cardsPerPage = 2; // No mobile: 2 cards por página
+        let totalPages = 0;
+
+        // Inicializar navegação dos componentes
+        function initComponentsNavigation() {
+            const componentCards = document.querySelectorAll('.component-card');
+            
+            // Ajustar cards por página baseado no tamanho da tela
+            if (window.innerWidth >= 1200) {
+                cardsPerPage = 5; // Desktop grande
+            } else if (window.innerWidth >= 992) {
+                cardsPerPage = 4; // Desktop médio
+            } else if (window.innerWidth >= 768) {
+                cardsPerPage = 3; // Tablet
+            } else {
+                cardsPerPage = 2; // Mobile
+            }
+            
+            // Calcular total de páginas
+            totalPages = Math.ceil(componentCards.length / cardsPerPage);
+            
+            // Criar indicadores de página
+            updatePageIndicators();
+            
+            // Atualizar visibilidade dos botões
+            updateNavButtons();
+        }
+
+        // Atualizar indicadores de página
+        function updatePageIndicators() {
+            pageIndicators.innerHTML = '';
+            
+            for (let i = 0; i < totalPages; i++) {
+                const indicator = document.createElement('div');
+                indicator.className = 'page-indicator';
+                if (i === currentPage) {
+                    indicator.classList.add('active');
+                }
+                
+                indicator.addEventListener('click', () => {
+                    goToPage(i);
+                });
+                
+                pageIndicators.appendChild(indicator);
+            }
+        }
+
+        // Atualizar botões de navegação
+        function updateNavButtons() {
+            prevBtn.classList.toggle('disabled', currentPage === 0);
+            nextBtn.classList.toggle('disabled', currentPage === totalPages - 1);
+        }
+
+        // Navegar para página específica
+        function goToPage(page) {
+            if (page < 0 || page >= totalPages) return;
+            
+            currentPage = page;
+            
+            // No mobile: Scroll horizontal
+            if (window.innerWidth <= 768) {
+                const containerWidth = componentsContainer.clientWidth;
+                const scrollPosition = currentPage * containerWidth;
+                
+                componentsContainer.scrollTo({
+                    left: scrollPosition,
+                    behavior: 'smooth'
+                });
+            }
+            
+            // Atualizar indicadores e botões
+            updatePageIndicators();
+            updateNavButtons();
+        }
+
+        // Event listeners para navegação
+        prevBtn.addEventListener('click', () => {
+            if (currentPage > 0) {
+                goToPage(currentPage - 1);
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentPage < totalPages - 1) {
+                goToPage(currentPage + 1);
+            }
+        });
+
+        // Detectar scroll no container (para mobile)
+        if (window.innerWidth <= 768) {
+            let scrollTimeout;
+            componentsContainer.addEventListener('scroll', () => {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => {
+                    const containerWidth = componentsContainer.clientWidth;
+                    const scrollLeft = componentsContainer.scrollLeft;
+                    const newPage = Math.round(scrollLeft / containerWidth);
+                    
+                    if (newPage !== currentPage) {
+                        currentPage = newPage;
+                        updatePageIndicators();
+                        updateNavButtons();
+                    }
+                }, 100);
+            });
+        }
+
+        // Inicializar navegação ao carregar e redimensionar
         window.addEventListener('load', () => {
             // NO MOBILE: Todos os cards já estão visíveis
             // NO DESKTOP: Verificar os visíveis
@@ -1448,16 +1774,21 @@
             if (window.scrollY > 300) {
                 backToTop.classList.add('visible');
             }
+            
+            // Inicializar navegação dos componentes
+            initComponentsNavigation();
         });
 
-        // NOVO: Redimensionamento da janela
+        // Redimensionamento da janela
         window.addEventListener('resize', () => {
             // Recalcular se é mobile após redimensionamento
             const newIsMobile = window.innerWidth <= 768;
             if (newIsMobile !== isMobile) {
-                // Recarregar comportamento
                 window.location.reload();
             }
+            
+            // Recalcular navegação dos componentes
+            initComponentsNavigation();
         });
 
         // Suavizar scroll para âncoras
@@ -1707,25 +2038,18 @@ void turnLeft() {
         }
 
         // Instruções no console
-        console.log("=== SITE FINALIZADO COM IMAGENS AJUSTADAS ===");
-        console.log("✅ Menu superior NÃO FIXO removido");
-        console.log("✅ Tamanho do menu reduzido em desktop e mobile");
-        console.log("✅ Textos com degradê substituídos por cores sólidas");
-        console.log("✅ Régua de 1 a 6 removida");
-        console.log("✅ Download do código corrigido para .ino");
-        console.log("✅ Layout totalmente responsivo implementado");
-        console.log("✅ Alinhamento à esquerda no mobile corrigido");
-        console.log("✅ Títulos limitados a 2 linhas no mobile");
-        console.log("✅ ANIMAÇÕES OTIMIZADAS: Cards visíveis instantaneamente no mobile");
-        console.log("✅ IMAGENS NO MOBILE: Tamanho aumentado (max-height: 450px)");
-        console.log("✅ IMAGENS NO DESKTOP: Tamanho aumentado (height: 320px)");
-        console.log("✅ IMAGENS NO DESKTOP: object-position: center (menos cortes)");
-        console.log("✅ IMAGENS NO MOBILE: object-fit: contain (mostra imagem completa)");
-        console.log("✅ IMAGENS NO DESKTOP: object-fit: cover (mantém proporção)");
-        console.log("✅ ANIMAÇÕES OTIMIZADAS: Trigger aumentado para 80% da janela");
-        console.log("✅ ANIMAÇÕES OTIMIZADAS: Performance otimizada com requestAnimationFrame");
-        console.log("✅ Espaçamentos otimizados para melhor leitura");
-        console.log("✅ Responsividade para 800x800 implementada");
+        console.log("=== SITE ATUALIZADO COM GRADE DE COMPONENTES ===");
+        console.log("✅ Seção 'Lista de Materiais' otimizada");
+        console.log("✅ GRADE RESPONSIVA: Cards organizados em grid");
+        console.log("✅ MOBILE: 2 cards por página com scroll horizontal");
+        console.log("✅ TABLET: 3 cards por linha");
+        console.log("✅ DESKTOP: 4-5 cards por linha (dependendo do tamanho)");
+        console.log("✅ 800x800: 4 cards por linha otimizados");
+        console.log("✅ CARDS REDUZIDOS: Tamanho otimizado para melhor visualização");
+        console.log("✅ NAVEGAÇÃO: Controles para mobile (anterior/próximo)");
+        console.log("✅ INDICADORES: Pontos de navegação para saber a página atual");
+        console.log("✅ ORGANIZAÇÃO: Layout preparado para fotos e vídeos futuros");
+        console.log("✅ LEGIBILIDADE: Textos ajustados, espaçamentos otimizados");
         console.log("✅ SITE PRONTO PARA USO!");
     </script>
 </body>
