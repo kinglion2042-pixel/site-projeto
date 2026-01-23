@@ -172,7 +172,7 @@
             color: var(--gray-text);
         }
 
-        /* Seção de introdução */
+        /* Seção de introdução - COM VÍDEO */
         .intro {
             background-color: var(--darker-bg);
         }
@@ -212,17 +212,21 @@
             overflow: hidden;
             box-shadow: var(--shadow);
             border: 1px solid var(--border-color);
+            position: relative;
         }
 
-        .intro-image img {
+        /* ESTILOS DO VÍDEO - SEM CONTROLES VISÍVEIS */
+        .intro-image video {
             width: 100%;
             height: 350px;
             object-fit: cover;
             display: block;
             transition: var(--transition);
+            background-color: #000; /* Fundo preto para vídeos */
+            /* Remove controles visíveis */
         }
 
-        .intro-image:hover img {
+        .intro-image:hover video {
             transform: scale(1.03);
         }
 
@@ -512,6 +516,11 @@
             .component-image {
                 height: 140px;
             }
+            
+            /* RESPONSIVIDADE DO VÍDEO */
+            .intro-image video {
+                height: 300px;
+            }
         }
 
         /* MOBILE - 2 COLUNAS COM SCROLL HORIZONTAL */
@@ -560,6 +569,11 @@
                 font-size: 0.9rem;
             }
             
+            /* RESPONSIVIDADE DO VÍDEO NO MOBILE */
+            .intro-image video {
+                height: 250px;
+            }
+            
             /* MOSTRA CONTROLES DE NAVEGAÇÃO NO MOBILE */
             .components-nav {
                 display: flex;
@@ -581,6 +595,10 @@
             .component-image {
                 height: 150px;
             }
+            
+            .intro-image video {
+                height: 220px;
+            }
         }
 
         /* RESOLUÇÃO ESPECÍFICA 800x800 */
@@ -596,6 +614,10 @@
             
             .component-image {
                 height: 140px;
+            }
+            
+            .intro-image video {
+                height: 280px;
             }
         }
 
@@ -872,10 +894,6 @@
             .section-title {
                 font-size: 1.9rem;
             }
-            
-            .intro-image img {
-                height: 300px;
-            }
         }
 
         /* Dispositivos móveis grandes e tablets pequenos */
@@ -1016,10 +1034,6 @@
                 font-size: 1.1rem;
             }
             
-            .intro-image img {
-                height: 220px;
-            }
-            
             .footer-logo, .footer-info {
                 min-width: 100%;
                 margin-bottom: 25px;
@@ -1109,7 +1123,7 @@
         </div>
     </section>
 
-    <!-- Seção de Introdução -->
+    <!-- Seção de Introdução COM VÍDEO -->
     <section class="intro" id="introducao">
         <div class="container">
             <div class="intro-content">
@@ -1123,7 +1137,11 @@
                     <p>O controle principal é feito por um Arduino UNO, que processa os dados do sensor e comanda os motores através de um driver L298N.</p>
                 </div>
                 <div class="intro-image">
-                    <img src="img/carro_convertido.png" alt="Carro Arduino em funcionamento">
+                    <!-- VÍDEO COM AUTOPLAY, LOOP E SEM CONTROLES VISÍVEIS -->
+                    <video autoplay muted loop playsinline preload="auto" id="carVideo">
+                        <source src="video/projeto.mp4" type="video/mp4">
+                        Seu navegador não suporta o elemento de vídeo.
+                    </video>
                 </div>
             </div>
         </div>
@@ -1361,7 +1379,7 @@
 <span class="code-comment">// Para instalar as bibliotecas vá em: Sketch >> Incluir Biblioteca >> Adicionar arquivo .ZIP >> Selecione os arquivos ZIP baixados pelos links acima //</span>
 
 <span class="code-keyword">#include</span> &lt;AFMotor.h&gt;  
-<span class="code-keyword">#include</span> &lt;NewPing.h&gt;
+<span class="code-keyword">#include</span> &lt;NewPing.h>
 <span class="code-keyword">#include</span> &lt;Servo.h&gt; 
 
 <span class="code-keyword">#define</span> TRIG_PIN A0 
@@ -1762,6 +1780,23 @@
             });
         }
 
+        // ============ CONTROLE DO VÍDEO ============
+        const carVideo = document.getElementById('carVideo');
+        
+        // Forçar reprodução automática
+        function playVideo() {
+            if (carVideo) {
+                carVideo.play().catch(error => {
+                    console.log("Erro ao reproduzir vídeo automaticamente:", error);
+                    // Tentar novamente com interação do usuário
+                    document.addEventListener('click', function playOnClick() {
+                        carVideo.play();
+                        document.removeEventListener('click', playOnClick);
+                    }, { once: true });
+                });
+            }
+        }
+
         // Inicializar navegação ao carregar e redimensionar
         window.addEventListener('load', () => {
             // NO MOBILE: Todos os cards já estão visíveis
@@ -1777,6 +1812,9 @@
             
             // Inicializar navegação dos componentes
             initComponentsNavigation();
+            
+            // Iniciar vídeo automaticamente
+            playVideo();
         });
 
         // Redimensionamento da janela
@@ -2038,19 +2076,13 @@ void turnLeft() {
         }
 
         // Instruções no console
-        console.log("=== SITE ATUALIZADO COM GRADE DE COMPONENTES ===");
-        console.log("✅ Seção 'Lista de Materiais' otimizada");
-        console.log("✅ GRADE RESPONSIVA: Cards organizados em grid");
-        console.log("✅ MOBILE: 2 cards por página com scroll horizontal");
-        console.log("✅ TABLET: 3 cards por linha");
-        console.log("✅ DESKTOP: 4-5 cards por linha (dependendo do tamanho)");
-        console.log("✅ 800x800: 4 cards por linha otimizados");
-        console.log("✅ CARDS REDUZIDOS: Tamanho otimizado para melhor visualização");
-        console.log("✅ NAVEGAÇÃO: Controles para mobile (anterior/próximo)");
-        console.log("✅ INDICADORES: Pontos de navegação para saber a página atual");
-        console.log("✅ ORGANIZAÇÃO: Layout preparado para fotos e vídeos futuros");
-        console.log("✅ LEGIBILIDADE: Textos ajustados, espaçamentos otimizados");
-        console.log("✅ SITE PRONTO PARA USO!");
+        console.log("=== SITE COMPLETO COM VÍDEO ===");
+        console.log("✅ VÍDEO ADICIONADO na seção 'Como esse Projeto Funciona?'");
+        console.log("✅ Vídeo agora inicia automaticamente em loop");
+        console.log("✅ Sem necessidade de clicar para dar play");
+        console.log("✅ Vídeo responsivo em todas as telas");
+        console.log("✅ Controles de vídeo: autoplay, muted, loop, playsinline, preload=auto");
+        console.log("✅ Site 100% responsivo e pronto para uso!");
     </script>
 </body>
 </html>
