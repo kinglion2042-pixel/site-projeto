@@ -292,26 +292,30 @@
             transform: translateY(-5px);
         }
 
-        /* CORREÇÃO: IMAGENS NO MOBILE E DESKTOP - TAMANHO AJUSTADO */
-        /* ALTERAÇÃO AQUI - object-fit: contain para mostrar imagem completa */
+        /* CORREÇÃO: IMAGENS NO MOBILE E DESKTOP - SEM BORDAS E PREENCHENDO TODO O ESPAÇO */
         .step-image {
             width: 100%;
             height: auto; /* ALTURA AUTOMÁTICA NO MOBILE */
             max-height: 420px; /* LIMITE MÁXIMO MAIOR NO MOBILE */
-            object-fit: contain; /* MOSTRA IMAGEM COMPLETA SEM CORTAR - ALTERADO DE cover para contain */
+            object-fit: cover; /* VOLTEI PARA COVER PARA PREENCHER SEM BORDAS */
             display: block;
             transition: var(--transition);
-            background-color: #1a1a2a; /* FUNDO PARA IMAGENS TRANSPARENTES */
+            background-color: #151520; /* COR DE FUNDO IGUAL AO CARD */
         }
 
-        /* DESKTOP: TAMANHO MAIOR E COMPORTAMENTO OTIMIZADO */
-        /* ALTERAÇÃO AQUI - object-fit: contain para mostrar imagem completa no desktop também */
+        /* DESKTOP: TAMANHO MAIOR E PREENCHENDO TODO O ESPAÇO */
         @media (min-width: 769px) {
             .step-image {
-                height: 320px; /* ALTURA MAIOR NO DESKTOP (era 280px) */
-                object-fit: contain; /* ALTERADO de cover para contain - MOSTRA IMAGEM COMPLETA */
+                height: 320px; /* ALTURA MAIOR NO DESKTOP */
+                object-fit: cover; /* PREENCHE TODO O ESPAÇO SEM BORDAS */
                 object-position: center center; /* CENTRALIZA A IMAGEM */
-                background-color: #1a1a2a; /* Adicionado fundo para desktop também */
+                background-color: #151520; /* COR DE FUNDO IGUAL AO CARD */
+            }
+            
+            /* ESPECIAL PARA O PASSO 2 - MOSTRAR IMAGEM COMPLETA */
+            #step2 .step-image {
+                object-fit: contain; /* Para o Passo 2, mostra imagem completa */
+                background-color: #1a1a2a; /* Fundo diferente para espaços vazios */
             }
         }
 
@@ -994,9 +998,16 @@
                 width: 100%;
                 height: auto !important;
                 max-height: 450px; /* MAIOR NO MOBILE (era 400px) */
-                object-fit: contain !important; /* MANTIDO contain para mostrar imagem completa */
-                background-color: #1a1a2a;
-                padding: 15px; /* MAIS ESPAÇO AO REDOR */
+                object-fit: cover !important; /* VOLTEI PARA COVER PARA PREENCHER SEM BORDAS */
+                background-color: #151520;
+                padding: 0; /* REMOVIDO O PADDING PARA ELIMINAR BORDAS */
+            }
+            
+            /* ESPECIAL PARA O PASSO 2 NO MOBILE */
+            #step2 .step-image {
+                object-fit: contain !important; /* Para o Passo 2, mostra imagem completa */
+                background-color: #1a1a2a; /* Fundo diferente para espaços vazios */
+                padding: 10px; /* Adiciona um pouco de padding apenas para o Passo 2 */
             }
         }
 
@@ -1063,8 +1074,13 @@
             
             /* AJUSTES ADICIONAIS PARA IMAGENS NO MOBILE PEQUENO */
             .step-image {
-                max-height: 400px; /* LIMITE AINDA BOM PARA CELULARES PEQUENOS (era 350px) */
-                padding: 10px;
+                max-height: 400px; /* LIMITE AINDA BOM PARA CELULARES PEQUENOS */
+                padding: 0; /* SEM BORDAS */
+            }
+            
+            #step2 .step-image {
+                max-height: 400px;
+                padding: 8px; /* Pouco padding apenas para o Passo 2 */
             }
         }
 
@@ -1089,6 +1105,10 @@
             /* AJUSTES FINAIS PARA IMAGENS EM TELAS MUITO PEQUENAS */
             .step-image {
                 max-height: 350px; /* AINDA RAZOÁVEL PARA TELAS PEQUENAS */
+            }
+            
+            #step2 .step-image {
+                max-height: 350px;
             }
         }
     </style>
@@ -2086,7 +2106,8 @@ void turnLeft() {
         console.log("✅ Vídeo responsivo em todas as telas");
         console.log("✅ Controles de vídeo: autoplay, muted, loop, playsinline, preload=auto");
         console.log("✅ Site 100% responsivo e pronto para uso!");
-        console.log("✅ CORREÇÃO: Imagem do Passo 2 agora mostra completa (object-fit: contain)");
+        console.log("✅ CORREÇÃO: Imagens agora preenchem todo o espaço SEM BORDAS (object-fit: cover)");
+        console.log("✅ ESPECIAL: Imagem do Passo 2 mostra completa (object-fit: contain)");
     </script>
 </body>
 </html>
