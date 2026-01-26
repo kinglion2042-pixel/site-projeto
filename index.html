@@ -293,22 +293,25 @@
         }
 
         /* CORREÇÃO: IMAGENS NO MOBILE E DESKTOP - TAMANHO AJUSTADO */
+        /* ALTERAÇÃO AQUI - object-fit: contain para mostrar imagem completa */
         .step-image {
             width: 100%;
             height: auto; /* ALTURA AUTOMÁTICA NO MOBILE */
             max-height: 420px; /* LIMITE MÁXIMO MAIOR NO MOBILE */
-            object-fit: contain; /* MOSTRA IMAGEM COMPLETA SEM CORTAR */
+            object-fit: contain; /* MOSTRA IMAGEM COMPLETA SEM CORTAR - ALTERADO DE cover para contain */
             display: block;
             transition: var(--transition);
             background-color: #1a1a2a; /* FUNDO PARA IMAGENS TRANSPARENTES */
         }
 
         /* DESKTOP: TAMANHO MAIOR E COMPORTAMENTO OTIMIZADO */
+        /* ALTERAÇÃO AQUI - object-fit: contain para mostrar imagem completa no desktop também */
         @media (min-width: 769px) {
             .step-image {
                 height: 320px; /* ALTURA MAIOR NO DESKTOP (era 280px) */
-                object-fit: cover; /* COBRE O ESPAÇO NO DESKTOP */
+                object-fit: contain; /* ALTERADO de cover para contain - MOSTRA IMAGEM COMPLETA */
                 object-position: center center; /* CENTRALIZA A IMAGEM */
+                background-color: #1a1a2a; /* Adicionado fundo para desktop também */
             }
         }
 
@@ -991,7 +994,7 @@
                 width: 100%;
                 height: auto !important;
                 max-height: 450px; /* MAIOR NO MOBILE (era 400px) */
-                object-fit: contain !important;
+                object-fit: contain !important; /* MANTIDO contain para mostrar imagem completa */
                 background-color: #1a1a2a;
                 padding: 15px; /* MAIS ESPAÇO AO REDOR */
             }
@@ -1139,7 +1142,7 @@
                 <div class="intro-image">
                     <!-- VÍDEO COM AUTOPLAY, LOOP E SEM CONTROLES VISÍVEIS -->
                     <video autoplay muted loop playsinline preload="auto" id="carVideo">
-                        <source src="video/projeto.mp4" type="video/mp4">
+                        <source src="video/projeto-arduino.mp4" type="video/mp4">
                         Seu navegador não suporta o elemento de vídeo.
                     </video>
                 </div>
@@ -2083,7 +2086,7 @@ void turnLeft() {
         console.log("✅ Vídeo responsivo em todas as telas");
         console.log("✅ Controles de vídeo: autoplay, muted, loop, playsinline, preload=auto");
         console.log("✅ Site 100% responsivo e pronto para uso!");
+        console.log("✅ CORREÇÃO: Imagem do Passo 2 agora mostra completa (object-fit: contain)");
     </script>
 </body>
 </html>
-
